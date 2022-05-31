@@ -1,0 +1,38 @@
+<h2 mat-dialog-title>Agregar Ingreso</h2>
+
+<mat-dialog-content class="mat-typography">
+    <form class="row g-3" [formGroup]="form">
+        <div class="col-md-6">
+            <mat-form-field class="full-width" appearance="fill">
+                <mat-label>Monto</mat-label>
+                <input type="number" formControlName="amount" matInput placeholder="Monto">
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Elige una fecha</mat-label>
+                <input formControlName="date" matInput [matDatepicker]="datepicker">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                <mat-datepicker #datepicker>
+                  <mat-datepicker-actions>
+                    <button mat-button matDatepickerCancel>Cancelar</button>
+                    <button mat-raised-button color="primary" matDatepickerApply>Aplicar</button>
+                  </mat-datepicker-actions>
+                </mat-datepicker>
+              </mat-form-field>
+        </div>
+        <div class="col-md-12">
+            <mat-form-field class="full-width" appearance="fill">
+                <mat-label>Descripción</mat-label>
+                <textarea formControlName="description" matInput placeholder="Descripción..."></textarea>
+            </mat-form-field>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-divider></mat-divider>
+<mat-dialog-actions  align="end">
+    <button  pButton type="button" (click)="close()" label="Cerrar" icon="pi pi-times-circle"
+        class="p-button-sm p-button-danger mr-3"></button>
+    <button pButton type="button" [disabled]="form.invalid" (click)="save()" label="Guardar" icon="pi pi-save" class="p-button-sm "></button>
+</mat-dialog-actions>
