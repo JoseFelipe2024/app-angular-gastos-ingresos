@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TransactionBaseService } from 'src/app/core/services/transactionBase.service';
 import { Bill } from 'src/app/shared/models/bill.model';
 
 
@@ -15,7 +16,7 @@ export class AddBillsComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<AddBillsComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,
-    private fb: FormBuilder
+    private fb: FormBuilder, private transactionBaseService: TransactionBaseService
   ) {
     this.dialogRef.disableClose = true;
     this.buildForm();
@@ -40,6 +41,7 @@ export class AddBillsComponent implements OnInit {
       return;
     }
     const bill = this.form.value as Bill;
+    this.transactionBaseService.addBill(bill);
     this.dialogRef.close(bill);
   }
 }

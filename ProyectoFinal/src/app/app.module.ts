@@ -11,6 +11,7 @@ import { ButtonCustomComponent } from './shared/components/button-custom/button-
 import { TableCustomComponent } from './shared/components/table-custom/table-custom.component';
 import {ButtonModule} from 'primeng/button';
 import { SharedModule } from './shared/shared.module';
+import { BillsModule } from './modules/bills/bills.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import { SharedModule } from './shared/shared.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     ButtonModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

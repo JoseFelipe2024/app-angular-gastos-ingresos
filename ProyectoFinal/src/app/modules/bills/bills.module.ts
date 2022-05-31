@@ -13,13 +13,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatDividerModule} from '@angular/material/divider';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CoreModule } from 'src/app/core/core.module';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [BillsComponent, AddBillsComponent],
   imports: [BillsRoutingModule, ButtonModule, MatDialogModule, MatFormFieldModule,
     MatInputModule, MatFormFieldModule, MatNativeDateModule, MatDatepickerModule, 
     MatButtonModule, FormsModule, ReactiveFormsModule, MatDividerModule, 
-    SharedModule, CoreModule],
+    SharedModule, CoreModule, CommonModule],
   providers: [],
   bootstrap: [BillsModule],
 })
