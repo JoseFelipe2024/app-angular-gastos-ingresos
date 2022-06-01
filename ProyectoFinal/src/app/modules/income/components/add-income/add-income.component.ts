@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TransactionBaseService } from 'src/app/core/services/transactionBase.service';
 import { Income } from 'src/app/shared/models/income.model';
 
 
@@ -15,7 +16,7 @@ export class AddIncomeComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<AddIncomeComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,
-    private fb: FormBuilder
+    private fb: FormBuilder,  private transactionBaseService: TransactionBaseService
   ) {
     this.dialogRef.disableClose = true;
     this.buildForm();
@@ -39,7 +40,8 @@ export class AddIncomeComponent implements OnInit {
     if(this.form?.invalid){
       return;
     }
-    const bill = this.form.value as Income;
-    this.dialogRef.close(bill);
+    const income = this.form.value as Income;
+    this.transactionBaseService.addIncome(income)
+    this.dialogRef.close(income);
   }
 }

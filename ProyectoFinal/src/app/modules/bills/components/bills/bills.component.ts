@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TransactionBaseService } from 'src/app/core/services/transactionBase.service';
 import { Bill } from 'src/app/shared/models/bill.model';
@@ -7,7 +7,8 @@ import { AddBillsComponent } from '../add-bills/add-bills.component';
 @Component({
   selector: 'app-bills',
   templateUrl: './bills.component.html',
-  styleUrls: ['./bills.component.css']
+  styleUrls: ['./bills.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class BillsComponent implements OnInit {
   bills: Bill[] = [];

@@ -15,12 +15,14 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { CoreModule } from 'src/app/core/core.module';
 import { CommonModule } from '@angular/common';
 
+import {MatTooltipModule} from '@angular/material/tooltip';
+
 @NgModule({
   declarations: [BillsComponent, AddBillsComponent],
   imports: [BillsRoutingModule, ButtonModule, MatDialogModule, MatFormFieldModule,
     MatInputModule, MatFormFieldModule, MatNativeDateModule, MatDatepickerModule, 
     MatButtonModule, FormsModule, ReactiveFormsModule, MatDividerModule, 
-    SharedModule, CoreModule, CommonModule],
+    SharedModule, CoreModule, CommonModule, MatTooltipModule],
   providers: [],
   bootstrap: [BillsModule],
 })
