@@ -12,16 +12,18 @@ import { MenubarModule } from "primeng/menubar";
 import { ButtonCustomComponent } from "./components/button-custom/button-custom.component";
 import { MenuComponent } from "./components/menu/menu.component";
 import { TableCustomComponent } from "./components/table-custom/table-custom.component";
+import { AddTransactionComponent } from './components/add-transaction/add-transaction.component';
+import { CoreModule } from "../core/core.module";
 
 
 @NgModule({
-    declarations: [ButtonCustomComponent, MenuComponent, TableCustomComponent],
+    declarations: [ButtonCustomComponent, MenuComponent, TableCustomComponent, AddTransactionComponent],
     imports: [ButtonModule, MatDialogModule, MatFormFieldModule,
       MatInputModule, MatFormFieldModule, MatNativeDateModule, MatDatepickerModule, 
       MatButtonModule, FormsModule, ReactiveFormsModule, MatDividerModule,
-      MenubarModule],
+      MenubarModule, CoreModule],
     providers: [],
-    exports: [ButtonCustomComponent, MenuComponent, TableCustomComponent],
+    exports: [ButtonCustomComponent, MenuComponent, TableCustomComponent, AddTransactionComponent],
     bootstrap: [SharedModule],
   })
   export class SharedModule {}

@@ -1,5 +1,6 @@
-import { TransactionBase } from "./transaction-base.mode";
-
-export interface Income extends TransactionBase{
-   
+export interface Income{
+    id: number;
+    amount: number;
+    date: Date;
+    description: string;
 }

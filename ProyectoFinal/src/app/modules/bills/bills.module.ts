@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BillsRoutingModule } from './bills-routing.module';
-import { AddBillsComponent } from './components/add-bills/add-bills.component';
 import { BillsComponent } from './components/bills/bills.component';
 import {ButtonModule} from 'primeng/button';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -18,7 +17,7 @@ import { CommonModule } from '@angular/common';
 import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
-  declarations: [BillsComponent, AddBillsComponent],
+  declarations: [BillsComponent],
   imports: [BillsRoutingModule, ButtonModule, MatDialogModule, MatFormFieldModule,
     MatInputModule, MatFormFieldModule, MatNativeDateModule, MatDatepickerModule, 
     MatButtonModule, FormsModule, ReactiveFormsModule, MatDividerModule, 

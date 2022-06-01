@@ -12,6 +12,8 @@ import { TableCustomComponent } from './shared/components/table-custom/table-cus
 import {ButtonModule} from 'primeng/button';
 import { SharedModule } from './shared/shared.module';
 import { BillsModule } from './modules/bills/bills.module';
+import { IncomeBillComponent } from './modules/income-bills/components/income-bill/income-bill.component';
+import { ngxLoadingAnimationTypes, NgxLoadingModule } from 'ngx-loading';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,14 @@ import { BillsModule } from './modules/bills/bills.module';
     BrowserAnimationsModule,
     ButtonModule,
     SharedModule,
+    NgxLoadingModule.forRoot({
+      animationType: ngxLoadingAnimationTypes.circleSwish,
+      backdropBackgroundColour: 'rgba(0,0,0,0.1)', 
+      backdropBorderRadius: '4px',
+      primaryColour: '#00000', 
+      secondaryColour: '#00000', 
+      tertiaryColour: '#00000'
+  })
   ],
   providers: [],
   bootstrap: [AppComponent]

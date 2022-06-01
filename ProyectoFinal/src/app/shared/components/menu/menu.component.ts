@@ -31,6 +31,7 @@ export class MenuComponent implements OnInit {
       {
         label: 'Ingresos/Gastos',
         icon: 'pi pi-fw pi-clone',
+        routerLink: 'income-bills'
       },
     ];
   }

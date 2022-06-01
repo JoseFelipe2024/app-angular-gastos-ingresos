@@ -1,8 +1,13 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { take } from 'rxjs/operators';
 import { TransactionBaseService } from 'src/app/core/services/transactionBase.service';
+import { AddTransactionComponent } from 'src/app/shared/components/add-transaction/add-transaction.component';
+import { ActionForm } from 'src/app/shared/models/action-form.model';
+import { ApiResponse } from 'src/app/shared/models/apiResponse.model';
 import { Income } from 'src/app/shared/models/income.model';
-import { AddIncomeComponent } from '../add-income/add-income.component';
+import { Transaction } from 'src/app/shared/models/transaction.mode';
+import { TransactionType } from 'src/app/shared/models/transaction-Type.model';
 
 @Component({
   selector: 'app-income',
@@ -11,7 +16,7 @@ import { AddIncomeComponent } from '../add-income/add-income.component';
   encapsulation: ViewEncapsulation.None,
 })
 export class IncomeComponent implements OnInit {
-  income: Income[] = [];
+  transaction: Transaction[] = [];
 
   constructor(public dialog: MatDialog, private transactionBaseService: TransactionBaseService) { }
 
@@ -20,17 +25,26 @@ export class IncomeComponent implements OnInit {
   }
 
   getIncome(){
-    this.transactionBaseService.getIncome().subscribe((income: Income[]) => {
-      this.income = income;
+    this.transactionBaseService.getTransactionsByType(TransactionType.Income).subscribe((res: ApiResponse<Transaction[]>) => {
+      this.transaction = res.data;
+    }, error => {
+      console.log(error);
     })
   }
 
   openModalAddIncome(){
-    this.dialog.open(AddIncomeComponent,{
+    this.dialog.open(AddTransactionComponent,{
+      data: {
+        transactionType: TransactionType.Income,
+        action: ActionForm.add,
+        title: 'Agregar Ingreso'
+      },
       width: '60%',
-      height: '50%'
-    }).afterClosed().subscribe(result => {
-      console.log(result);
+      height: '63%'
+    }).afterClosed().pipe(take(1)).subscribe(result => {
+      if(result?.new){
+        this.getIncome();
+      }
     });
   }
 

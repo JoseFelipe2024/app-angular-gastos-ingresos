@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { AddIncomeComponent } from './components/add-income/add-income.component';
 import { IncomeComponent } from './components/income/income.component';
 import { IncomeRoutingModule } from './income-routing.module';
 import {ButtonModule} from 'primeng/button';
@@ -16,7 +15,7 @@ import { CommonModule } from '@angular/common';
 import { CoreModule } from 'src/app/core/core.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 @NgModule({
-  declarations: [IncomeComponent, AddIncomeComponent],
+  declarations: [IncomeComponent],
   imports: [IncomeRoutingModule, ButtonModule, MatDialogModule, MatFormFieldModule,
     MatInputModule, MatFormFieldModule, MatNativeDateModule, MatDatepickerModule, 
     MatButtonModule, FormsModule, ReactiveFormsModule, MatDividerModule, SharedModule,

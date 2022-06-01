@@ -18,6 +18,10 @@ const routes: Routes = [
     loadChildren: () => import('./modules/income/income.module').then((m) => m.IncomeModule),
   },
   {
+    path: 'income-bills',
+    loadChildren: () => import('./modules/income-bills/income-bill.module').then((m) => m.IncomeBillModule),
+  },
+  {
     path: '**',
     redirectTo: 'home'
   }

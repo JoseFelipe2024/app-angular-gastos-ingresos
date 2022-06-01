@@ -1,8 +1,13 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { take } from 'rxjs/operators';
 import { TransactionBaseService } from 'src/app/core/services/transactionBase.service';
+import { AddTransactionComponent } from 'src/app/shared/components/add-transaction/add-transaction.component';
+import { ActionForm } from 'src/app/shared/models/action-form.model';
+import { ApiResponse } from 'src/app/shared/models/apiResponse.model';
 import { Bill } from 'src/app/shared/models/bill.model';
-import { AddBillsComponent } from '../add-bills/add-bills.component';
+import { Transaction } from 'src/app/shared/models/transaction.mode';
+import { TransactionType } from 'src/app/shared/models/transaction-Type.model';
 
 @Component({
   selector: 'app-bills',
@@ -11,7 +16,7 @@ import { AddBillsComponent } from '../add-bills/add-bills.component';
   encapsulation: ViewEncapsulation.None,
 })
 export class BillsComponent implements OnInit {
-  bills: Bill[] = [];
+  transaction: Transaction[] = [];
 
   constructor(public dialog: MatDialog,
     private transactionBaseService: TransactionBaseService) { }
@@ -21,17 +26,26 @@ export class BillsComponent implements OnInit {
   }
 
   getBills(){
-    this.transactionBaseService.getBills().subscribe((bills: Bill[]) => {
-      this.bills = bills;
+    this.transactionBaseService.getTransactionsByType(TransactionType.Bill).subscribe((res: ApiResponse<Transaction[]>) => {
+      this.transaction = res.data;
+    }, error => {
+      console.log(error);
     })
   }
 
   openModalAddBills(){
-    this.dialog.open(AddBillsComponent,{
+    this.dialog.open(AddTransactionComponent,{
+      data: {
+        transactionType: TransactionType.Bill,
+        action: ActionForm.add,
+        title: 'Agregar Gasto'
+      },
       width: '60%',
-      height: '50%'
-    }).afterClosed().subscribe(result => {
-      console.log(result);
+      height: '63%'
+    }).afterClosed().pipe(take(1)).subscribe(result => {
+      if(result?.new){
+        this.getBills();
+      }
     });
   }
 
