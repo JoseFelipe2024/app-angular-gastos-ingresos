@@ -14,14 +14,13 @@ import {MatDividerModule} from '@angular/material/divider';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { CoreModule } from 'src/app/core/core.module';
-
-
+import { MatTooltipModule } from '@angular/material/tooltip';
 @NgModule({
   declarations: [IncomeComponent, AddIncomeComponent],
   imports: [IncomeRoutingModule, ButtonModule, MatDialogModule, MatFormFieldModule,
     MatInputModule, MatFormFieldModule, MatNativeDateModule, MatDatepickerModule, 
     MatButtonModule, FormsModule, ReactiveFormsModule, MatDividerModule, SharedModule,
-    CommonModule, CoreModule],
+    CommonModule, CoreModule, MatTooltipModule],
   providers: [],
   bootstrap: [IncomeModule],
 })
