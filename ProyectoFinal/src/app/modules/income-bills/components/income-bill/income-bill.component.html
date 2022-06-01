@@ -9,6 +9,7 @@
                       <th scope="col">Monto</th>
                       <th scope="col">Fecha</th>
                       <th scope="col">Descripción</th>
+                      <th scope="col" class="text-center">Comprobante</th>
                     </tr>
                   </thead>
                   <tbody class="table-group-divider">
@@ -18,6 +19,21 @@
                       <td>{{item.amount | currency}}</td>
                       <td>{{item.date | date: 'dd/MM/yyyy'}}</td>
                       <td>{{item.description}}</td>
+                      <td class="text-center">
+                        <ng-container *ngIf="item.evidence; else noEvidence">
+                          <button 
+                          pButton 
+                          type="button" 
+                          matTooltip="Comprobante"
+                          matTooltipClass="tooltip-red"
+                          label="" 
+                          icon="pi {{getClassButtonEvidence(item.typeFile)}}" 
+                          class="p-button p-button-danger"></button>
+                        </ng-container>
+                        <ng-template #noEvidence>
+                          N/A
+                        </ng-template>
+                      </td>
                     </tr>
                   </tbody>
               </table>

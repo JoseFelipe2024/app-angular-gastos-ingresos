@@ -48,4 +48,8 @@ export class IncomeComponent implements OnInit {
     });
   }
 
+  getClassButtonEvidence(typeFile: string){
+    return typeFile === 'application/pdf' ? 'pi-file-pdf' : 'pi-image';
+  }
+
 }
