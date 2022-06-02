@@ -1,42 +1,68 @@
 <div class="card">
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Tipo</th>
-                      <th scope="col">Monto</th>
-                      <th scope="col">Fecha</th>
-                      <th scope="col">Descripción</th>
-                      <th scope="col" class="text-center">Comprobante</th>
-                    </tr>
-                  </thead>
-                  <tbody class="table-group-divider">
-                    <tr *ngFor="let item of transaction">
-                      <th scope="row">{{item.id}}</th>
-                      <td>{{getTypeTransation(item.type)}}</td>
-                      <td>{{item.amount | currency}}</td>
-                      <td>{{item.date | date: 'dd/MM/yyyy'}}</td>
-                      <td>{{item.description}}</td>
-                      <td class="text-center">
-                        <ng-container *ngIf="item.evidence; else noEvidence">
-                          <button 
-                          pButton 
-                          type="button" 
-                          matTooltip="Comprobante"
-                          matTooltipClass="tooltip-red"
-                          label="" 
-                          icon="pi {{getClassButtonEvidence(item.typeFile)}}" 
-                          class="p-button p-button-danger"></button>
-                        </ng-container>
-                        <ng-template #noEvidence>
-                          N/A
-                        </ng-template>
-                      </td>
-                    </tr>
-                  </tbody>
-              </table>
-        </div>
+  <div class="card-header flex justify-content-end flex-wrap card-container">
+    <!--mat-form-field appearance="fill">
+      <mat-label>Tipo de Transacción</mat-label>
+      <mat-select [(ngModel)]="selectedValue" name="type">
+        <mat-option *ngFor="let type of typesTransaction" [value]="type.id">
+          {{type.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field-->
+
+    <div class="formgroup-inline">
+      <div class="field">
+        <p-dropdown [options]="typesTransaction" [(ngModel)]="selectedValue" placeholder="Tipo de Transacción"
+          optionLabel="name" optionValue="id" [showClear]="true"></p-dropdown>
+      </div>
+      <div class="field">
+        <p-calendar placeholder="Fecha" [(ngModel)]="date" [showIcon]="true" inputId="icon"></p-calendar>
+      </div>
+      <div class="field">
+        <p-inputNumber placeholder="Monto" [(ngModel)]="amount">
+        </p-inputNumber>
+      </div>
+      <button 
+        pButton 
+        (click)="filter()" 
+        type="button" 
+        label="Buscar" 
+        icon="pi pi-search" 
+        class="p-button">
+      </button>
     </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Monto</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Descripción</th>
+            <th scope="col" class="text-center">Comprobante</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          <tr *ngFor="let item of transaction">
+            <th scope="row">{{item.id}}</th>
+            <td>{{getTypeTransation(item.type)}}</td>
+            <td>{{item.amount | currency}}</td>
+            <td>{{item.date | date: 'dd/MM/yyyy'}}</td>
+            <td>{{item.description}}</td>
+            <td class="text-center">
+              <ng-container *ngIf="item.evidence; else noEvidence">
+                <button pButton type="button" matTooltip="Comprobante" matTooltipClass="tooltip-red" label=""
+                  icon="pi {{getClassButtonEvidence(item.typeFile)}}" class="p-button p-button-danger"></button>
+              </ng-container>
+              <ng-template #noEvidence>
+                N/A
+              </ng-template>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
