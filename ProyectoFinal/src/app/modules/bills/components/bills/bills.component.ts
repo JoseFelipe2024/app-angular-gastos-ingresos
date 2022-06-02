@@ -8,6 +8,7 @@ import { ApiResponse } from 'src/app/shared/models/apiResponse.model';
 import { Bill } from 'src/app/shared/models/bill.model';
 import { Transaction } from 'src/app/shared/models/transaction.mode';
 import { TransactionType } from 'src/app/shared/models/transaction-Type.model';
+import { ViewEvidenceComponent } from 'src/app/shared/components/view-evidence/view-evidence.component';
 
 @Component({
   selector: 'app-bills',
@@ -52,5 +53,20 @@ export class BillsComponent implements OnInit {
   getClassButtonEvidence(typeFile: string){
     return typeFile === 'application/pdf' ? 'pi-file-pdf' : 'pi-image';
   }
+
+  openViewEvidenceComponent(bill: Transaction){
+    this.dialog.open(ViewEvidenceComponent,{
+      data: {
+        typeFile: bill.typeFile,
+        base64: bill.evidence
+      },
+      
+    }).afterClosed().pipe(take(1)).subscribe(result => {
+      if(result?.new){
+        this.getBills();
+      }
+    });
+  }
+
 
 }

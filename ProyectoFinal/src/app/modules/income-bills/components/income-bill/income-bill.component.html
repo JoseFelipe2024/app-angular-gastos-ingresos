@@ -53,7 +53,7 @@
             <td>{{item.description}}</td>
             <td class="text-center">
               <ng-container *ngIf="item.evidence; else noEvidence">
-                <button pButton type="button" matTooltip="Comprobante" matTooltipClass="tooltip-red" label=""
+                <button (click)="openViewEvidenceComponent(item)" pButton type="button" matTooltip="Comprobante" matTooltipClass="tooltip-red" label=""
                   icon="pi {{getClassButtonEvidence(item.typeFile)}}" class="p-button p-button-danger"></button>
               </ng-container>
               <ng-template #noEvidence>

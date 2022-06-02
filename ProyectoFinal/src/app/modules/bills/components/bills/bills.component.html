@@ -30,6 +30,7 @@
                       <td class="text-center">
                         <ng-container *ngIf="item.evidence; else noEvidence">
                           <button 
+                          (click)="openViewEvidenceComponent(item)"
                           pButton 
                           type="button" 
                           matTooltip="Comprobante"

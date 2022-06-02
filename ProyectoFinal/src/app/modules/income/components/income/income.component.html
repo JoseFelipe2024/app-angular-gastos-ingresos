@@ -32,6 +32,7 @@
                         <ng-container *ngIf="item.evidence; else noEvidence">
                           <button 
                           pButton 
+                          (click)="openViewEvidenceComponent(item)"
                           type="button" 
                           matTooltip="Comprobante"
                           matTooltipClass="tooltip-red"

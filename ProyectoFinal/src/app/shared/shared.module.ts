@@ -14,16 +14,18 @@ import { MenuComponent } from "./components/menu/menu.component";
 import { TableCustomComponent } from "./components/table-custom/table-custom.component";
 import { AddTransactionComponent } from './components/add-transaction/add-transaction.component';
 import { CoreModule } from "../core/core.module";
+import { ViewEvidenceComponent } from './components/view-evidence/view-evidence.component';
+import { CommonModule } from "@angular/common";
 
 
 @NgModule({
-    declarations: [ButtonCustomComponent, MenuComponent, TableCustomComponent, AddTransactionComponent],
+    declarations: [ButtonCustomComponent, MenuComponent, TableCustomComponent, AddTransactionComponent, ViewEvidenceComponent],
     imports: [ButtonModule, MatDialogModule, MatFormFieldModule,
       MatInputModule, MatFormFieldModule, MatNativeDateModule, MatDatepickerModule, 
-      MatButtonModule, FormsModule, ReactiveFormsModule, MatDividerModule,
+      MatButtonModule, FormsModule,CommonModule, ReactiveFormsModule, MatDividerModule,
       MenubarModule, CoreModule],
     providers: [],
-    exports: [ButtonCustomComponent, MenuComponent, TableCustomComponent, AddTransactionComponent],
+    exports: [ButtonCustomComponent, MenuComponent, TableCustomComponent, AddTransactionComponent, ViewEvidenceComponent],
     bootstrap: [SharedModule],
   })
   export class SharedModule {}

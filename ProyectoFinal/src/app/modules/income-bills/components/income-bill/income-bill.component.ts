@@ -4,6 +4,9 @@ import { ApiResponse } from 'src/app/shared/models/apiResponse.model';
 import { Transaction } from 'src/app/shared/models/transaction.mode';
 import { TransactionType } from 'src/app/shared/models/transaction-Type.model';
 import { formatDate } from '@angular/common';
+import { ViewEvidenceComponent } from 'src/app/shared/components/view-evidence/view-evidence.component';
+import { take } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-income-bill',
@@ -29,7 +32,7 @@ export class IncomeBillComponent implements OnInit {
   amount: number = 0;
   date!: Date;
 
-  constructor(private transactionBaseService: TransactionBaseService) { }
+  constructor(public dialog: MatDialog,private transactionBaseService: TransactionBaseService) { }
 
   ngOnInit(): void {
     this.getTransactions();
@@ -53,11 +56,10 @@ export class IncomeBillComponent implements OnInit {
   }
 
   filter(){
-    /*if(!this.date && this.amount === 0 && !this.selectedValue){
+    if(!this.date && this.amount === 0 && !this.selectedValue){
       this.transaction = [...this.transactionOriginalList];
       return;
-    }*/
-    console.log(this.selectedValue, this.amount, this.date)
+    }
     let transaction = this.transactionOriginalList.filter(t => t.type === this.selectedValue
       || this.getFormatDate(this.date) === this.getFormatDate(t.date) || this.amount === t.amount);
       console.log(transaction)
@@ -67,6 +69,16 @@ export class IncomeBillComponent implements OnInit {
   getFormatDate(date: any){
     if(!date) return;
     return formatDate(date, 'MM-yyyy-dd', 'en-US');
+  }
+
+  openViewEvidenceComponent(transaction: Transaction){
+    this.dialog.open(ViewEvidenceComponent,{
+      data: {
+        typeFile: transaction.typeFile,
+        base64: transaction.evidence
+      },
+      
+    });
   }
 
 }

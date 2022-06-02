@@ -8,6 +8,7 @@ import { ApiResponse } from 'src/app/shared/models/apiResponse.model';
 import { Income } from 'src/app/shared/models/income.model';
 import { Transaction } from 'src/app/shared/models/transaction.mode';
 import { TransactionType } from 'src/app/shared/models/transaction-Type.model';
+import { ViewEvidenceComponent } from 'src/app/shared/components/view-evidence/view-evidence.component';
 
 @Component({
   selector: 'app-income',
@@ -50,6 +51,16 @@ export class IncomeComponent implements OnInit {
 
   getClassButtonEvidence(typeFile: string){
     return typeFile === 'application/pdf' ? 'pi-file-pdf' : 'pi-image';
+  }
+
+  openViewEvidenceComponent(income: Transaction){
+    this.dialog.open(ViewEvidenceComponent,{
+      data: {
+        typeFile: income.typeFile,
+        base64: income.evidence
+      },
+      
+    });
   }
 
 }
