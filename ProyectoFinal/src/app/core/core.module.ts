@@ -10,7 +10,6 @@ import { LoandingInterceptorInterceptor } from "./interceptors/loanding-intercep
     imports: [ HttpClientModule, SharedModule ],
     providers: [
       TransactionBaseService, 
-     
       {
         provide: HTTP_INTERCEPTORS, useClass: LoandingInterceptorInterceptor,
         multi: true
