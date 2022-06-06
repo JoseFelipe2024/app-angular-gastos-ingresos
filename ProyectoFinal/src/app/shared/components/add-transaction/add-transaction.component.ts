@@ -5,6 +5,7 @@ import { TransactionBaseService } from 'src/app/core/services/transactionBase.se
 import { ActionForm } from '../../models/action-form.model';
 import { Transaction } from '../../models/transaction.mode';
 import { TransactionType } from '../../models/transaction-Type.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-transaction',
@@ -22,6 +23,7 @@ export class AddTransactionComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<AddTransactionComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,
+    private toastr: ToastrService,
     private fb: FormBuilder, private transactionBaseService: TransactionBaseService
   ) {
     this.dialogRef.disableClose = true;
@@ -29,6 +31,13 @@ export class AddTransactionComponent implements OnInit {
     this.action = this.data.action;
     this.title = this.data?.title;
     this.buildForm();
+    if(this.data?.transaction){
+      this.form.patchValue({
+        ...this.data.transaction
+      });
+      console.log(this.data.transaction,this.form.value)
+    }
+ 
   }
 
   buildForm(){
@@ -75,19 +84,44 @@ export class AddTransactionComponent implements OnInit {
     if(this.action === ActionForm.add){
       transaction.createDate = new Date();
       transaction.updateDate = new Date();
+      this.post(transaction);
     }
     if(this.action === ActionForm.edit){
       transaction.updateDate = new Date();
+      this.update(transaction);
     }
+   
+  }
+
+  private update(transaction: Transaction){
+    this.transactionBaseService.updateTransaction(transaction).subscribe(res => {
+      if(res.succeeded){
+        this.dialogRef.close({
+          new: true
+        });
+        this.toastr.success('La transacción se han actualizado correctamente');
+      }else{
+        this.toastr.error(res.message, '');
+      }
+    }, error => {
+      this.toastr.error('Ha ocurrido un error al actualizar la transacción', '');
+    });
+  }
+
+
+  private post(transaction: Transaction){
     this.transactionBaseService.addTransaction(transaction).subscribe(res => {
       if(res.succeeded){
         this.dialogRef.close({
           new: true
         });
+        this.toastr.success('La transacción se ha registrado correctamente');
+      }else{
+        this.toastr.error(res.message, '');
       }
     }, error => {
-      console.log(error)
-    })
+      this.toastr.error('Ha ocurrido un error al registrar la transacción', '');
+    });
   }
 
 }

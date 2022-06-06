@@ -17,7 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class IncomeBillComponent implements OnInit {
   transaction: Transaction[] = [];
   transactionOriginalList: Transaction[] = [];
-  selectedValue: any;
+  selectedValue: any = null;
 
   typesTransaction: any[] = [
     {
@@ -31,6 +31,8 @@ export class IncomeBillComponent implements OnInit {
   ];
   amount: number = 0;
   date!: Date;
+
+  p: number = 1;
 
   constructor(public dialog: MatDialog,private transactionBaseService: TransactionBaseService) { }
 
@@ -55,15 +57,42 @@ export class IncomeBillComponent implements OnInit {
     return typeFile === 'application/pdf' ? 'pi-file-pdf' : 'pi-image';
   }
 
+ 
+
+  clearSearch(){
+    this.amount = 0;
+    this.date = null!;
+    this.selectedValue = null;
+    this.transaction = [...this.transactionOriginalList];
+  }
+
   filter(){
-    if(!this.date && this.amount === 0 && !this.selectedValue){
+    console.log(this.transactionOriginalList.length)
+    if(!this.date && this.amount <= 0 && !this.selectedValue){
       this.transaction = [...this.transactionOriginalList];
       return;
     }
-    let transaction = this.transactionOriginalList.filter(t => t.type === this.selectedValue
-      || this.getFormatDate(this.date) === this.getFormatDate(t.date) || this.amount === t.amount);
-      console.log(transaction)
+    let transaction: any[] = [];
+    if(this.selectedValue){
+      transaction = [...transaction, 
+        ...this.getOriginalList.filter(t => t.type === this.selectedValue)];
+    }
+    if(this.date){
+      transaction = [...transaction, 
+        ...this.getOriginalList.filter(t => this.getFormatDate(this.date) === this.getFormatDate(t.date))]
+    }
+    if(this.amount > 0){
+      transaction = [...transaction, 
+        ...this.getOriginalList.filter(t => t.amount === this.amount)];
+    }
+    console.log(transaction)
     this.transaction = transaction;
+  }
+
+  private get getOriginalList(){
+    return [...this.transactionOriginalList.map(t => {
+      return {...t}
+    })];
   }
 
   getFormatDate(date: any){
@@ -77,7 +106,7 @@ export class IncomeBillComponent implements OnInit {
         typeFile: transaction.typeFile,
         base64: transaction.evidence
       },
-      
+     
     });
   }
 

@@ -33,7 +33,7 @@ export class TransactionBaseService{
     }
 
     deleteTransactions(id: number): Observable<ApiResponse<number>> {
-        return this.http.delete<ApiResponse<number>>(`${this.api_url}/Transaction/${id}`);
+        return this.http.delete<ApiResponse<number>>(`${this.api_url}/Transaction?id=${id}`);
     }
 
 }

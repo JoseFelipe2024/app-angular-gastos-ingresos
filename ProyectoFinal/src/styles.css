@@ -5,6 +5,7 @@
 /*
 */
 
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
@@ -27,4 +28,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .p-menuitem-link-active .p-menuitem-icon{
     color: #ffffff !important;
+}
+
+
+.ngx-pagination .current {
+    background: #3F51B5 !important;
+  }
+
+.ngx-pagination a, .ngx-pagination button {
+    text-decoration: none !important;
+    cursor: pointer;
+}
+
+.btn-primary{
+    background: #3F51B5 !important;
 }

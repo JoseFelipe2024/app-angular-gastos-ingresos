@@ -10,11 +10,13 @@ import { FormsModule } from "@angular/forms";
 import {DropdownModule} from 'primeng/dropdown';
 import {CalendarModule} from 'primeng/calendar';
 import {InputNumberModule} from 'primeng/inputnumber';
+import { NgxPaginationModule } from "ngx-pagination";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @NgModule({
     declarations: [IncomeBillComponent],
     imports: [IncomeBillRoutingModule, FormsModule, 
-      ButtonModule, DropdownModule, CalendarModule,
+      ButtonModule, DropdownModule, CalendarModule, NgxPaginationModule,
        MatTooltipModule, CommonModule, CoreModule, InputNumberModule],
     providers: [],
     bootstrap: [IncomeBillModule],

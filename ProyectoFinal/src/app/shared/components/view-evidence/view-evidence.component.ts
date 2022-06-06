@@ -24,7 +24,7 @@ export class ViewEvidenceComponent implements OnInit {
       let divpdf = document.getElementById('pdf');
       if(divpdf){
         divpdf!.style.display = 'block';
-        divpdf.innerHTML = `<iframe src="${this.getPdf()}" style="width: 100%; height: 100%;"></iframe>`
+        divpdf.innerHTML = `<iframe src="${this.getPdf()}" width="700px" height="600px"></iframe>`
       }
     }
     

@@ -9,6 +9,8 @@ import { Bill } from 'src/app/shared/models/bill.model';
 import { Transaction } from 'src/app/shared/models/transaction.mode';
 import { TransactionType } from 'src/app/shared/models/transaction-Type.model';
 import { ViewEvidenceComponent } from 'src/app/shared/components/view-evidence/view-evidence.component';
+import {ConfirmationService} from 'primeng/api';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-bills',
@@ -18,8 +20,11 @@ import { ViewEvidenceComponent } from 'src/app/shared/components/view-evidence/v
 })
 export class BillsComponent implements OnInit {
   transaction: Transaction[] = [];
+  p: number = 1;
 
   constructor(public dialog: MatDialog,
+    private toastr: ToastrService,
+    private confirmationService: ConfirmationService,
     private transactionBaseService: TransactionBaseService) { }
 
   ngOnInit(): void {
@@ -28,9 +33,13 @@ export class BillsComponent implements OnInit {
 
   getBills(){
     this.transactionBaseService.getTransactionsByType(TransactionType.Bill).subscribe((res: ApiResponse<Transaction[]>) => {
-      this.transaction = res.data;
+      if(res.succeeded){
+        this.transaction = res.data;
+      }else{
+        this.toastr.error(res.message, '');
+      }
     }, error => {
-      console.log(error);
+      this.toastr.error('Ha ocurriodo un error al cargar los ingresos');
     })
   }
 
@@ -41,8 +50,7 @@ export class BillsComponent implements OnInit {
         action: ActionForm.add,
         title: 'Agregar Gasto'
       },
-      width: '60%',
-      height: '63%'
+     
     }).afterClosed().pipe(take(1)).subscribe(result => {
       if(result?.new){
         this.getBills();
@@ -67,6 +75,43 @@ export class BillsComponent implements OnInit {
       }
     });
   }
+
+  remove(transaction: Transaction){
+    this.confirmationService.confirm({
+      header: 'Confirmar',
+      message: '¿Estás seguro de que quieres realizar esta acción?',
+      accept: () => {
+          this.transactionBaseService.deleteTransactions(transaction.id).subscribe(res => {
+            if(res.succeeded){
+              this.toastr.success('Registro eliminado correctamente', '');
+              this.getBills();
+            }else{
+              this.toastr.error(res.message, '');
+            }
+          }, error => {
+            this.toastr.error('Ha ocurrido un error al eliminar el registro', '');
+          })
+      }
+  });
+  }
+
+  
+  edit(transaction: Transaction){
+    this.dialog.open(AddTransactionComponent,{
+      data: {
+        transaction: transaction,
+        transactionType: TransactionType.Bill,
+        action: ActionForm.edit,
+        title: 'Editar Ingreso'
+      },
+     
+    }).afterClosed().pipe(take(1)).subscribe(result => {
+      if(result?.new){
+        this.getBills();
+      }
+    });
+  }
+
 
 
 }

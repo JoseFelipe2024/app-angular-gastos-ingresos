@@ -14,13 +14,19 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { CoreModule } from 'src/app/core/core.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { NgxPaginationModule } from "ngx-pagination";
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [IncomeComponent],
-  imports: [IncomeRoutingModule, ButtonModule, MatDialogModule, MatFormFieldModule,
+  imports: [IncomeRoutingModule, ToastrModule.forRoot(), ButtonModule, ConfirmDialogModule, NgxPaginationModule, MatDialogModule, MatFormFieldModule,
     MatInputModule, MatFormFieldModule, MatNativeDateModule, MatDatepickerModule, 
     MatButtonModule, FormsModule, ReactiveFormsModule, MatDividerModule, SharedModule,
     CommonModule, CoreModule, MatTooltipModule],
-  providers: [],
+  providers: [ConfirmationService, ToastrService],
   bootstrap: [IncomeModule],
 })
 export class IncomeModule {}
