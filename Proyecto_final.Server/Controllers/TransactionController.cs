@@ -82,7 +82,7 @@ namespace Proyecto_final.Server.Controllers
             }
             catch (Exception ex)
             {
-                response.Message = "Ocurrió un error al actualizar el nuevo registro";
+                response.Message = "Ocurrió un error al actualizar el registro";
                 return BadRequest(response);
             }
 
@@ -99,7 +99,7 @@ namespace Proyecto_final.Server.Controllers
             }
             catch (Exception ex)
             {
-                response.Message = "Ocurrió un error al eliminar el nuevo registro";
+                response.Message = "Ocurrió un error al eliminar el registro";
                 return BadRequest(response);
             }
 
