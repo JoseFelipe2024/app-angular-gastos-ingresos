@@ -61,8 +61,6 @@ namespace Proyecto_final.Server.Controllers
             var response = new ApiResponse<int>();
             try
             {
-                transaction.CreateDate = new DateTimeOffset();
-                transaction.UpdateDate = new DateTimeOffset();
                 response.Data = await this.transaction.AddTransaction(transaction);
             }
             catch (Exception ex)
@@ -80,7 +78,6 @@ namespace Proyecto_final.Server.Controllers
             var response = new ApiResponse<int>();
             try
             {
-                transaction.UpdateDate = new DateTimeOffset();
                 response.Data = await this.transaction.UpdateTransaction(transaction);
             }
             catch (Exception ex)

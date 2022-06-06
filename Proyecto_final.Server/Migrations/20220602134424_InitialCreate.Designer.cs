@@ -10,8 +10,8 @@ using Proyecto_final.Server.Data;
 namespace Proyecto_final.Server.Migrations
 {
     [DbContext(typeof(TransactionDbContext))]
-    [Migration("20220601203152_InitialCreate3")]
-    partial class InitialCreate3
+    [Migration("20220602134424_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -45,6 +45,9 @@ namespace Proyecto_final.Server.Migrations
 
                     b.Property<int>("Type")
                         .HasColumnType("integer");
+
+                    b.Property<string>("TypeFile")
+                        .HasColumnType("text");
 
                     b.Property<DateTimeOffset>("UpdateDate")
                         .HasColumnType("timestamp with time zone");

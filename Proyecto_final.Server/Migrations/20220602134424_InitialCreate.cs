@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Proyecto_final.Server.Migrations
 {
-    public partial class InitialCreat : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,8 +16,10 @@ namespace Proyecto_final.Server.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Amount = table.Column<double>(type: "double precision", nullable: false),
                     Date = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true),
                     Type = table.Column<int>(type: "integer", nullable: false),
                     Evidence = table.Column<string>(type: "text", nullable: true),
+                    TypeFile = table.Column<string>(type: "text", nullable: true),
                     CreateDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     UpdateDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
