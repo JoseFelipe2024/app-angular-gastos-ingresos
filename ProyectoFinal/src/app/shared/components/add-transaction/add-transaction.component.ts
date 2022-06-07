@@ -99,7 +99,7 @@ export class AddTransactionComponent implements OnInit {
         this.dialogRef.close({
           new: true
         });
-        this.toastr.success('La transacción se han actualizado correctamente');
+        this.toastr.success('La transacción se ha actualizado correctamente');
       }else{
         this.toastr.error(res.message, '');
       }
