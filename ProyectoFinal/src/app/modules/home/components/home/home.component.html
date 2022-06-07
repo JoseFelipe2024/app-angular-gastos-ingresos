@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-md-6 mb-3 ">
+        <div class="card">
+            <div class="card-header">
+                Transacciones Por Tipo
+            </div>
+            <div class="card-body">
+                <div echarts [options]="optionsType" ></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-3 ">
+        <div class="card">
+            <div class="card-header">
+                Montos Por Tipo de Transacción
+            </div>
+            <div class="card-body">
+                <div echarts [options]="options" ></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 mb-3 ">
+        <div class="card">
+            <div class="card-header">
+                Ingresos Por Mes
+            </div>
+            <div class="card-body">
+                <div echarts [options]="optionMonthIncome" ></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 mb-3 ">
+        <div class="card">
+            <div class="card-header">
+                Gastos Por Mes
+            </div>
+            <div class="card-body">
+                <div echarts [options]="optionMonthBills" ></div>
+            </div>
+        </div>
+    </div>
+
+</div>

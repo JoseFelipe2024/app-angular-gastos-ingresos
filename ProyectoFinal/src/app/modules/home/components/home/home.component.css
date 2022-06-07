@@ -1,0 +1,10 @@
+.card-header{
+    background-color: #3F51B5 !important;
+    color: #ffffff !important;
+    padding: 1.3em !important;
+    font-size: medium;
+}
+
+.card{
+    border-color: #3F51B5 !important;
+}

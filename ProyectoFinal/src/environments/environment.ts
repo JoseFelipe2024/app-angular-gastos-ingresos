@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  API_URL: 'https://localhost:44301/api'
+  API_URL: 'https://gestor-economia.herokuapp.com/api'
 };
 
 /*
