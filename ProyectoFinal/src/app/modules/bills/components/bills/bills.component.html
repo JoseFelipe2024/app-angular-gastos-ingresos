@@ -14,7 +14,6 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                      <th scope="col">#</th>
                       <th scope="col">Monto</th>
                       <th scope="col">Fecha</th>
                       <th scope="col">Descripción</th>
@@ -24,14 +23,10 @@
                   </thead>
                   <tbody class="table-group-divider">
                     <tr *ngFor="let item of transaction | paginate: { itemsPerPage: 5, currentPage: p }">
-                      <th scope="row">{{item.id}}</th>
                       <td>{{item.amount | currency}}</td>
                       <td>{{item.date | date: 'dd/MM/yyyy'}}</td>
                       <td>{{item.description}}</td>
                       <td class="text-center">
-                        <!--button mat-fab color="primary" >
-                          <mat-icon>delete</mat-icon>
-                        </button-->
                         <ng-container *ngIf="item.evidence; else noEvidence">
                           <button 
                           (click)="openViewEvidenceComponent(item)"
