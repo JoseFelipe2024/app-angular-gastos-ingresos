@@ -57,8 +57,6 @@ export class IncomeBillComponent implements OnInit {
     return typeFile === 'application/pdf' ? 'pi-file-pdf' : 'pi-image';
   }
 
- 
-
   clearSearch(){
     this.amount = 0;
     this.date = null!;
@@ -67,7 +65,6 @@ export class IncomeBillComponent implements OnInit {
   }
 
   filter(){
-    console.log(this.transactionOriginalList.length)
     if(!this.date && this.amount <= 0 && !this.selectedValue){
       this.transaction = [...this.transactionOriginalList];
       return;

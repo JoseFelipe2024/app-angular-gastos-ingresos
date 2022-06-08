@@ -9,8 +9,9 @@ import { Income } from 'src/app/shared/models/income.model';
 import { Transaction } from 'src/app/shared/models/transaction.mode';
 import { TransactionType } from 'src/app/shared/models/transaction-Type.model';
 import { ViewEvidenceComponent } from 'src/app/shared/components/view-evidence/view-evidence.component';
-import {ConfirmationService} from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ToastrService } from 'ngx-toastr';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-income',
@@ -20,93 +21,150 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class IncomeComponent implements OnInit {
   transaction: Transaction[] = [];
+  transactionOriginalList: Transaction[] = [];
   p: number = 1;
+  amount: number = 0;
+  date!: Date;
 
-  constructor(public dialog: MatDialog, 
+  constructor(
+    public dialog: MatDialog,
     private toastr: ToastrService,
     private confirmationService: ConfirmationService,
-    private transactionBaseService: TransactionBaseService) { }
+    private transactionBaseService: TransactionBaseService
+  ) {}
 
   ngOnInit(): void {
     this.getIncome();
   }
 
-  getIncome(){
-    this.transactionBaseService.getTransactionsByType(TransactionType.Income).subscribe((res: ApiResponse<Transaction[]>) => {
-      if(res.succeeded){
-        this.transaction = res.data;
-      }else{
-        this.toastr.error(res.message, '');
-      }
-    }, error => {
-      this.toastr.error('Ha ocurriodo un error al cargar los ingresos');
-    })
+  getIncome() {
+    this.transactionBaseService
+      .getTransactionsByType(TransactionType.Income)
+      .subscribe(
+        (res: ApiResponse<Transaction[]>) => {
+          if (res.succeeded) {
+            this.transaction = res.data;
+            this.transactionOriginalList = res.data;
+          } else {
+            this.toastr.error(res.message, '');
+          }
+        },
+        (error) => {
+          this.toastr.error('Ha ocurriodo un error al cargar los ingresos');
+        }
+      );
   }
 
-  openModalAddIncome(){
-    this.dialog.open(AddTransactionComponent,{
-      data: {
-        transactionType: TransactionType.Income,
-        action: ActionForm.add,
-        title: 'Agregar Ingreso'
-      },
-     
-    }).afterClosed().pipe(take(1)).subscribe(result => {
-      if(result?.new){
-        this.getIncome();
-      }
-    });
+  openModalAddIncome() {
+    this.dialog
+      .open(AddTransactionComponent, {
+        data: {
+          transactionType: TransactionType.Income,
+          action: ActionForm.add,
+          title: 'Agregar Ingreso',
+        },
+      })
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((result) => {
+        if (result?.new) {
+          this.getIncome();
+        }
+      });
   }
 
-  getClassButtonEvidence(typeFile: string){
+  getClassButtonEvidence(typeFile: string) {
     return typeFile === 'application/pdf' ? 'pi-file-pdf' : 'pi-image';
   }
 
-  openViewEvidenceComponent(income: Transaction){
-    this.dialog.open(ViewEvidenceComponent,{
+  openViewEvidenceComponent(income: Transaction) {
+    this.dialog.open(ViewEvidenceComponent, {
       data: {
         typeFile: income.typeFile,
-        base64: income.evidence
+        base64: income.evidence,
       },
-      
     });
   }
 
-  edit(transaction: Transaction){
-    this.dialog.open(AddTransactionComponent,{
-      data: {
-        transaction: transaction,
-        transactionType: TransactionType.Income,
-        action: ActionForm.edit,
-        title: 'Editar Ingreso'
-      },
-     
-    }).afterClosed().pipe(take(1)).subscribe(result => {
-      if(result?.new){
-        this.getIncome();
-      }
-    });
+  edit(transaction: Transaction) {
+    this.dialog
+      .open(AddTransactionComponent, {
+        data: {
+          transaction: transaction,
+          transactionType: TransactionType.Income,
+          action: ActionForm.edit,
+          title: 'Editar Ingreso',
+        },
+      })
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((result) => {
+        if (result?.new) {
+          this.getIncome();
+        }
+      });
   }
 
-
-  remove(transaction: Transaction){
+  remove(transaction: Transaction) {
     this.confirmationService.confirm({
       header: 'Confirmar',
       message: '¿Estás seguro de que quieres realizar esta acción?',
       accept: () => {
-          this.transactionBaseService.deleteTransactions(transaction.id).subscribe(res => {
-            if(res.succeeded){
-              this.toastr.success('Registro eliminado correctamente', '');
-              this.getIncome();
-            }else{
-              this.toastr.error(res.message, '');
+        this.transactionBaseService
+          .deleteTransactions(transaction.id)
+          .subscribe(
+            (res) => {
+              if (res.succeeded) {
+                this.toastr.success('Registro eliminado correctamente', '');
+                this.getIncome();
+              } else {
+                this.toastr.error(res.message, '');
+              }
+            },
+            (error) => {
+              this.toastr.error(
+                'Ha ocurrido un error al eliminar el registro',
+                ''
+              );
             }
-          }, error => {
-            this.toastr.error('Ha ocurrido un error al eliminar el registro', '');
-          })
-      }
-  });
+          );
+      },
+    });
   }
 
+  clearSearch(){
+    this.amount = 0;
+    this.date = null!;
+    this.transaction = [...this.transactionOriginalList];
+  }
+
+  filter(){
+    if(!this.date && this.amount <= 0){
+      this.transaction = [...this.transactionOriginalList];
+      return;
+    }
+    let transaction: any[] = [];
+    if(this.date){
+      transaction = [...transaction, 
+        ...this.getOriginalList.filter(t => this.getFormatDate(this.date) === this.getFormatDate(t.date))]
+    }
+    if(this.amount > 0){
+      transaction = [...transaction, 
+        ...this.getOriginalList.filter(t => t.amount === this.amount)];
+    }
+    console.log(transaction)
+    this.transaction = transaction;
+  }
+
+  getFormatDate(date: any){
+    if(!date) return;
+    return formatDate(date, 'MM-yyyy-dd', 'en-US');
+  }
+
+  private get getOriginalList(){
+    return [...this.transactionOriginalList.map(t => {
+      return {...t}
+    })];
+  }
 
 }

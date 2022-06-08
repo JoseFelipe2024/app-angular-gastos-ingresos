@@ -11,6 +11,7 @@ import { TransactionType } from 'src/app/shared/models/transaction-Type.model';
 import { ViewEvidenceComponent } from 'src/app/shared/components/view-evidence/view-evidence.component';
 import {ConfirmationService} from 'primeng/api';
 import { ToastrService } from 'ngx-toastr';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-bills',
@@ -21,6 +22,9 @@ import { ToastrService } from 'ngx-toastr';
 export class BillsComponent implements OnInit {
   transaction: Transaction[] = [];
   p: number = 1;
+  transactionOriginalList: Transaction[] = [];
+  amount: number = 0;
+  date!: Date;
 
   constructor(public dialog: MatDialog,
     private toastr: ToastrService,
@@ -35,6 +39,7 @@ export class BillsComponent implements OnInit {
     this.transactionBaseService.getTransactionsByType(TransactionType.Bill).subscribe((res: ApiResponse<Transaction[]>) => {
       if(res.succeeded){
         this.transaction = res.data;
+        this.transactionOriginalList = res.data;
       }else{
         this.toastr.error(res.message, '');
       }
@@ -112,6 +117,40 @@ export class BillsComponent implements OnInit {
     });
   }
 
+  clearSearch(){
+    this.amount = 0;
+    this.date = null!;
+    this.transaction = [...this.transactionOriginalList];
+  }
+
+  filter(){
+    if(!this.date && this.amount <= 0){
+      this.transaction = [...this.transactionOriginalList];
+      return;
+    }
+    let transaction: any[] = [];
+    if(this.date){
+      transaction = [...transaction, 
+        ...this.getOriginalList.filter(t => this.getFormatDate(this.date) === this.getFormatDate(t.date))]
+    }
+    if(this.amount > 0){
+      transaction = [...transaction, 
+        ...this.getOriginalList.filter(t => t.amount === this.amount)];
+    }
+    console.log(transaction)
+    this.transaction = transaction;
+  }
+
+  getFormatDate(date: any){
+    if(!date) return;
+    return formatDate(date, 'MM-yyyy-dd', 'en-US');
+  }
+
+  private get getOriginalList(){
+    return [...this.transactionOriginalList.map(t => {
+      return {...t}
+    })];
+  }
 
 
 }

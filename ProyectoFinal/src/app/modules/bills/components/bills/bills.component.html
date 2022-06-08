@@ -1,14 +1,20 @@
 <div class="card">
-    <div class="card-header">
-        <button pButton 
-        (click)="openModalAddBills()"
-        matTooltip="Agregar Nuevo Gasto"
-        matTooltipClass="tooltip-red"
-        type="button" 
-        label="Agregar Gasto"
-        icon="pi pi-plus-circle" 
-        class="p-button"></button>
+  <div class="card-header flex justify-content-between flex-wrap card-container">
+    <div>
+      <button pButton (click)="openModalAddBills()" type="button" matTooltip="Agregar Nuevo Ingreso"
+        matTooltipClass="tooltip-red" label="Agregar Ingreso" icon="pi pi-plus-circle" class="p-button"></button>
     </div>
+    <div class="formgroup-inline">
+      <div class="flex align-items-center justify-content-center">
+
+        <input type="date" [(ngModel)]="date" placeholder="Fecha" class="form-control mr-2">
+        <input type="number" [(ngModel)]="amount" placeholder="Monto" class="form-control mr-2">
+     
+        <button  (click)="clearSearch()" class="btn btn-outline-secondary mr-2" type="button">Limpiar</button>
+        <button (click)="filter()" class="btn btn-primary" type="button">Buscar</button>
+      </div>
+    </div>
+  </div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-hover">
