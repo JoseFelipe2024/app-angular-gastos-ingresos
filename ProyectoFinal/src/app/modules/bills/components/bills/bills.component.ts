@@ -128,16 +128,15 @@ export class BillsComponent implements OnInit {
       this.transaction = [...this.transactionOriginalList];
       return;
     }
-    let transaction: any[] = [];
-    if(this.date){
-      transaction = [...transaction, 
-        ...this.getOriginalList.filter(t => this.getFormatDate(this.date) === this.getFormatDate(t.date))]
-    }
-    if(this.amount > 0){
-      transaction = [...transaction, 
-        ...this.getOriginalList.filter(t => t.amount === this.amount)];
-    }
-    console.log(transaction)
+    let transaction: any[] = this.getOriginalList.filter(item => {
+       if(this.getFormatDate(this.date) === this.getFormatDate(item.date)){
+         return item;
+       }
+       if(item.amount == this.amount){
+          return item;
+       }
+       return;
+    });
     this.transaction = transaction;
   }
 
