@@ -1,11 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   { 
-    path: '', redirectTo: 'home', pathMatch: 'full', 
+    path: '', redirectTo: 'admin', pathMatch: 'full', 
   },
   {
+    path: 'auth',
+    loadChildren: () => import('./modules/auth/auth.module').then((m) => m.AuthModule),
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./modules/admin/admin.module').then((m) => m.AdminModule),
+    canActivate: [AuthGuard]
+  },
+  /*{
     path: 'home',
     loadChildren: () => import('./modules/home/home.module').then((m) => m.HomeModule),
   },
@@ -20,10 +30,10 @@ const routes: Routes = [
   {
     path: 'income-bills',
     loadChildren: () => import('./modules/income-bills/income-bill.module').then((m) => m.IncomeBillModule),
-  },
+  },*/
   {
     path: '**',
-    redirectTo: 'home'
+    redirectTo: 'admin'
   }
 ];
 

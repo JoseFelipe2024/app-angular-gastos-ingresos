@@ -7,21 +7,22 @@ import { Income } from "src/app/shared/models/income.model";
 import { TransactionType } from "src/app/shared/models/transaction-Type.model";
 import { Transaction } from "src/app/shared/models/transaction.mode";
 import { environment } from "src/environments/environment";
+import { AuthService } from "./auth.service";
 
 @Injectable()
 export class TransactionBaseService{
     private readonly api_url = environment.API_URL;
 
-    constructor(private http: HttpClient){
+    constructor(private http: HttpClient, private auth: AuthService){
 
     }
 
     getTransactions(): Observable<ApiResponse<Transaction[]>> {
-        return this.http.get<ApiResponse<Transaction[]>>(`${this.api_url}/Transaction`);
+        return this.http.get<ApiResponse<Transaction[]>>(`${this.api_url}/Transaction?UserId=${this.auth.getUser()?.id}`);
     }
 
     getTransactionsByType(type: TransactionType): Observable<ApiResponse<Transaction[]>> {
-        return this.http.get<ApiResponse<Transaction[]>>(`${this.api_url}/Transaction/Type?type=${type}`);
+        return this.http.get<ApiResponse<Transaction[]>>(`${this.api_url}/Transaction/Type?type=${type}&UserId=${this.auth.getUser()?.id}`);
     }
 
     addTransaction(transaction: Transaction):  Observable<ApiResponse<number>> {

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { UserAuth } from '../../models/userAuth.model';
 
 @Component({
   selector: 'app-menu',
@@ -8,32 +10,48 @@ import { MenuItem } from 'primeng/api';
 })
 export class MenuComponent implements OnInit {
   items!: MenuItem[];
+  user!: UserAuth;
 
-  constructor() {}
+  constructor(private auth: AuthService) {}
 
   ngOnInit() {
     this.items = [
       {
         label: 'Home',
         icon: 'pi pi-fw pi-home',
-        routerLink: 'home'
+        routerLink: '/admin/home'
       },
       {
         label: 'Ingresos',
         icon: 'pi pi-fw pi-plus-circle',
-        routerLink: 'income'
+        routerLink: '/admin/income'
       },
       {
         label: 'Gastos',
         icon: 'pi pi-minus',
-        routerLink: 'bills'
+        routerLink: '/admin/bills'
       },
       {
         label: 'Ingresos/Gastos',
         icon: 'pi pi-fw pi-clone',
-        routerLink: 'income-bills'
+        routerLink: '/admin/income-bills'
       },
     ];
+    this.getUserAuth();
+  }
+
+  private getUserAuth(){
+    this.auth.getUserAuth().subscribe(user => {
+      this.user = user;
+    });
+  }
+
+  logout(){
+    this.auth.logout();
+  }
+
+  get getInitialName(){
+    return `${this.user?.firstName?.charAt(0)}`
   }
 
 }
