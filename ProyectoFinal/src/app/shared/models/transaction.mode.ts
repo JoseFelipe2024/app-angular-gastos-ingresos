@@ -8,4 +8,5 @@ export interface Transaction {
     typeFile: string;
     createDate: Date;
     updateDate: Date;
+    userId: number;
 }

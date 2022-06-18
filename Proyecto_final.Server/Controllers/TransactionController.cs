@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Proyecto_final.Server.ApiResponse;
 using Proyecto_final.Server.Models;
 using Proyecto_final.Server.Services;
@@ -11,6 +12,7 @@ namespace Proyecto_final.Server.Controllers
 {
     [ApiController]
     [Route("api/[Controller]")]
+    [Authorize]
     public class TransactionController : ControllerBase
     {
         private readonly ITransactionService transaction;
@@ -22,12 +24,12 @@ namespace Proyecto_final.Server.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<ApiResponse<IEnumerable<Transaction>>>> Get()
+        public async Task<ActionResult<ApiResponse<IEnumerable<Transaction>>>> Get(int UserId)
         {
             var response = new ApiResponse<IEnumerable<Transaction>>();
             try
             {
-                response.Data = await this.transaction.GetTransactions();
+                response.Data = await this.transaction.GetTransactions(UserId);
             }
             catch (Exception ex)
             {
@@ -39,12 +41,12 @@ namespace Proyecto_final.Server.Controllers
         }
 
         [HttpGet("Type")]
-        public async Task<ActionResult<ApiResponse<IEnumerable<Transaction>>>> GetByType(int type)
+        public async Task<ActionResult<ApiResponse<IEnumerable<Transaction>>>> GetByType(int type, int UserId)
         {
             var response = new ApiResponse<IEnumerable<Transaction>>();
             try
             {
-                response.Data = await this.transaction.GetTransactionByType(type);
+                response.Data = await this.transaction.GetTransactionByType(type, UserId);
             }
             catch (Exception ex)
             {

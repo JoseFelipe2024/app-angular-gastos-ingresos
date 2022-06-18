@@ -15,13 +15,15 @@ import { CoreModule } from "../core/core.module";
 import { ViewEvidenceComponent } from './components/view-evidence/view-evidence.component';
 import { CommonModule } from "@angular/common";
 import { ToastrModule, ToastrService } from "ngx-toastr";
-
+import { MatIconModule } from "@angular/material/icon";
+import {AvatarModule} from 'primeng/avatar';
 
 @NgModule({
     declarations: [MenuComponent,  AddTransactionComponent, ViewEvidenceComponent],
     imports: [ButtonModule, MatDialogModule, ToastrModule.forRoot(), MatFormFieldModule,
       MatInputModule, MatFormFieldModule, MatNativeDateModule, MatDatepickerModule, 
       MatButtonModule, FormsModule,CommonModule, ReactiveFormsModule, MatDividerModule,
+      MatIconModule, AvatarModule,
       MenubarModule, CoreModule],
     providers: [ToastrService],
     exports: [MenuComponent, AddTransactionComponent, ViewEvidenceComponent],

@@ -6,6 +6,7 @@ import { ActionForm } from '../../models/action-form.model';
 import { Transaction } from '../../models/transaction.mode';
 import { TransactionType } from '../../models/transaction-Type.model';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-add-transaction',
@@ -23,7 +24,7 @@ export class AddTransactionComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<AddTransactionComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,
-    private toastr: ToastrService,
+    private toastr: ToastrService, private auth: AuthService,
     private fb: FormBuilder, private transactionBaseService: TransactionBaseService
   ) {
     this.dialogRef.disableClose = true;
@@ -84,6 +85,7 @@ export class AddTransactionComponent implements OnInit {
     if(this.action === ActionForm.add){
       transaction.createDate = new Date();
       transaction.updateDate = new Date();
+      transaction.userId = this.auth.getUser()?.id;
       this.post(transaction);
     }
     if(this.action === ActionForm.edit){

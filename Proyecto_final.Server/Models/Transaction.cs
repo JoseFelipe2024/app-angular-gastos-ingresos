@@ -16,6 +16,8 @@ namespace Proyecto_final.Server.Models
         public string TypeFile { get; set; }
         public DateTimeOffset CreateDate { get; set; }
         public DateTimeOffset UpdateDate { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
     }
 
 }
