@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { TransactionBaseService } from 'src/app/core/services/transactionBase.service';
 import { TransactionType } from 'src/app/shared/models/transaction-Type.model';
 import { Transaction } from 'src/app/shared/models/transaction.mode';
@@ -31,12 +32,15 @@ export class HomeComponent implements OnInit {
     'Dic',
   ]
 
-  constructor(private transactionBaseService: TransactionBaseService) {}
+  constructor(private transactionBaseService: TransactionBaseService, 
+    private toastr: ToastrService,) {}
 
   ngOnInit(): void {
     this.transactionBaseService.getTransactions().subscribe((res) => {
       this.transactions = res.data;
       this.setData();
+    }, error => {
+      this.toastr.error('Ha ocurriodo un error al cargar los datos');
     });
   }
 

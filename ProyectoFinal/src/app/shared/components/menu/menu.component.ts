@@ -19,22 +19,22 @@ export class MenuComponent implements OnInit {
       {
         label: 'Home',
         icon: 'pi pi-fw pi-home',
-        routerLink: '/admin/home'
+        routerLink: '/home'
       },
       {
         label: 'Ingresos',
         icon: 'pi pi-fw pi-plus-circle',
-        routerLink: '/admin/income'
+        routerLink: '/income'
       },
       {
         label: 'Gastos',
         icon: 'pi pi-minus',
-        routerLink: '/admin/bills'
+        routerLink: '/bills'
       },
       {
         label: 'Ingresos/Gastos',
         icon: 'pi pi-fw pi-clone',
-        routerLink: '/admin/income-bills'
+        routerLink: '/income-bills'
       },
     ];
     this.getUserAuth();

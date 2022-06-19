@@ -7,6 +7,7 @@ import { formatDate } from '@angular/common';
 import { ViewEvidenceComponent } from 'src/app/shared/components/view-evidence/view-evidence.component';
 import { take } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-income-bill',
@@ -34,7 +35,7 @@ export class IncomeBillComponent implements OnInit {
 
   p: number = 1;
 
-  constructor(public dialog: MatDialog,private transactionBaseService: TransactionBaseService) { }
+  constructor(public dialog: MatDialog,  private toastr: ToastrService, private transactionBaseService: TransactionBaseService) { }
 
   ngOnInit(): void {
     this.getTransactions();
@@ -45,7 +46,7 @@ export class IncomeBillComponent implements OnInit {
       this.transaction = res.data;
       this.transactionOriginalList = res.data;
     }, error => {
-      console.log(error);
+      this.toastr.error('Ha ocurriodo un error al cargar los datos');
     });
   }
 

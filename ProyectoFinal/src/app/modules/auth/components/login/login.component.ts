@@ -37,12 +37,12 @@ export class LoginComponent implements OnInit {
       if(res.succeeded){
         this.toastr.success('Usuario autenticado correctamente');
         this.auth.setUserAuth(res.data);
-        this.router.navigate(['/admin'])
+        this.router.navigate(['/'])
       }else{
         this.toastr.error(res.message);
       }
     }, error => {
-      this.toastr.error(error?.error?.message);
+      this.toastr.error(error?.error?.message ?? 'Ups, algo salió mal en el servidor.');
     })
   }
 
