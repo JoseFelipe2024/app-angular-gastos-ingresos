@@ -29,9 +29,6 @@ export class JwtInterceptor implements HttpInterceptor {
         if (response.status === 401) {
           this.auth.logout();
         }
-        if (response.status === 500 || response.status === 500) {
-          this.toastrService.error('Ups, algo salió mal en el servidor.');
-        }
         return throwError(response);
       }
   ));
