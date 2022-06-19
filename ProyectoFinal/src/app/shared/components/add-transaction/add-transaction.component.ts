@@ -36,7 +36,6 @@ export class AddTransactionComponent implements OnInit {
       this.form.patchValue({
         ...this.data.transaction
       });
-      console.log(this.data.transaction,this.form.value)
     }
  
   }
@@ -52,7 +51,8 @@ export class AddTransactionComponent implements OnInit {
       evidence: [null],
       typeFile: [null],
       createDate: [null],
-      updateDate: [null]
+      updateDate: [null],
+      userId: []
     })
   }
 
