@@ -4,25 +4,39 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-  HttpErrorResponse
+  HttpErrorResponse,
 } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, EMPTY, Observable, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { use } from 'echarts';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
+  constructor(
+    private auth: AuthService,
+    private toastrService: ToastrService,
+    private jwtHelperService: JwtHelperService
+  ) {}
 
-  constructor(private auth: AuthService, private toastrService: ToastrService) {}
-
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+  intercept(
+    request: HttpRequest<unknown>,
+    next: HttpHandler
+  ): Observable<HttpEvent<unknown>> {
     const user = this.auth.getUser();
-    if(user){
+    if (user?.token) {
+      const isExpired = this.jwtHelperService.isTokenExpired(user?.token);
+      if (isExpired) {
+        this.auth.logout();
+        this.toastrService.error('Tu sesión ha expirado, vuelve a inicial sesión');
+        return EMPTY;
+      }
       request = request.clone({
         setHeaders: {
-            authorization: `Bearer ${ user.token }`
-        }
-    });
+          authorization: `Bearer ${user.token}`,
+        },
+      });
     }
     return next.handle(request).pipe(
       catchError((response: HttpErrorResponse) => {
@@ -30,7 +44,7 @@ export class JwtInterceptor implements HttpInterceptor {
           this.auth.logout();
         }
         return throwError(response);
-      }
-  ));
+      })
+    );
   }
 }

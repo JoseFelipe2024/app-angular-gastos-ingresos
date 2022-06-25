@@ -5,6 +5,11 @@ import { TransactionBaseService } from "./services/transactionBase.service";
 import { LoandingServicesService } from "./services/loanding-services.service";
 import { LoandingInterceptorInterceptor } from "./interceptors/loanding-interceptor.interceptor";
 import { JwtInterceptor } from "./interceptors/jwt.interceptor";
+import { JwtModule } from "@auth0/angular-jwt";
+import { UserAuth } from "../shared/models/userAuth.model";
+
+
+
 
 @NgModule({
     declarations: [],
