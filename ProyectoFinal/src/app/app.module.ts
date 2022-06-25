@@ -12,6 +12,17 @@ import { SharedModule } from './shared/shared.module';
 import { BillsModule } from './modules/bills/bills.module';
 import { IncomeBillComponent } from './modules/income-bills/components/income-bill/income-bill.component';
 import { ngxLoadingAnimationTypes, NgxLoadingModule } from 'ngx-loading';
+import { UserAuth } from './shared/models/userAuth.model';
+import { JwtModule } from '@auth0/angular-jwt';
+
+
+export function tokenGetter() {
+  if(localStorage.getItem("user")){
+    const userAuth = localStorage.getItem("user") as unknown as UserAuth;
+    return JSON.parse(userAuth?.token)
+  }
+  return '';
+}
 
 @NgModule({
   declarations: [
@@ -30,6 +41,13 @@ import { ngxLoadingAnimationTypes, NgxLoadingModule } from 'ngx-loading';
       primaryColour: '#00000', 
       secondaryColour: '#00000', 
       tertiaryColour: '#00000'
+  }),
+  JwtModule.forRoot({
+    config: {
+      tokenGetter: tokenGetter,
+      allowedDomains: ["*"],
+      disallowedRoutes: ["*"],
+    },
   })
   ],
   providers: [],
