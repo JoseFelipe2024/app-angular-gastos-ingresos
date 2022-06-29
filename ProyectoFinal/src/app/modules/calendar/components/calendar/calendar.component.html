@@ -1,0 +1,80 @@
+<div class="card">
+  <div class="card-header flex justify-content-end flex-wrap card-container">
+    <div class="formgroup-inline">
+      <div class="flex align-items-center justify-content-center">
+        <select class="form-select mr-2">
+          <option selected disabled value="null">Tipo de Transacción</option>
+          <option [ngValue]="item.id" *ngFor="let item of typesTransaction">{{item.name}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row text-center">
+      <div class="col-md-4">
+        <div class="btn-group">
+          <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+            (viewDateChange)="closeOpenMonthViewDay()">
+            Previous
+          </div>
+          <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
+            Today
+          </div>
+          <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+            (viewDateChange)="closeOpenMonthViewDay()">
+            Next
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+      </div>
+     
+    </div>
+    <br />
+    <div>
+      <mwl-calendar-month-view
+        [viewDate]="viewDate"
+        [events]="events"
+        [activeDayIsOpen]="activeDayIsOpen"
+      >
+      </mwl-calendar-month-view>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Primary color</th>
+            <th>Secondary color</th>
+            <th>Starts at</th>
+            <th>Ends at</th>
+            <th>Remove</th>
+          </tr>
+        </thead>
+    
+        <tbody>
+          <tr *ngFor="let event of events">
+            <td>
+              <input
+                type="text"
+                class="form-control"
+              />
+            </td>
+            <td>
+              <input
+                type="color"
+              />
+            </td>
+            <td>
+              <input
+                type="color"
+               
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

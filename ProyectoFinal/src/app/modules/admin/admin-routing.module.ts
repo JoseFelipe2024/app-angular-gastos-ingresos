@@ -33,7 +33,12 @@ const routes: Routes = [
           import('../income-bills/income-bill.module').then(
             (m) => m.IncomeBillModule
           ),
-      }
+      },
+      {
+        path: 'calendar',
+        loadChildren: () =>
+          import('../calendar/calendar.module').then((m) => m.CalendarModule),
+      },
     ],
   },
 ];

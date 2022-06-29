@@ -22,8 +22,8 @@ namespace Proyecto_final.Server.Tools
             {
                 new Claim("id", user.Id.ToString()),
                 new Claim("email", user.Email),
-                new Claim("FirstName", user.FirstName),
-                new Claim("LastName", user.LastName),
+                new Claim("firstName", user.FirstName),
+                new Claim("fastName", user.LastName),
             };
 
             var token = new JwtSecurityToken(config["Jwt:Issuer"], config["Jwt:Audience"],
