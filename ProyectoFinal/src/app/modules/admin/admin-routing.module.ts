@@ -34,11 +34,11 @@ const routes: Routes = [
             (m) => m.IncomeBillModule
           ),
       },
-      {
+      /*{
         path: 'calendar',
         loadChildren: () =>
           import('../calendar/calendar.module').then((m) => m.CalendarModule),
-      },
+      },*/
     ],
   },
 ];
