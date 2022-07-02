@@ -36,11 +36,11 @@ export class MenuComponent implements OnInit {
         icon: 'pi pi-fw pi-clone',
         routerLink: '/income-bills'
       },
-      /*{
+      {
         label: 'Calendario',
         icon: 'pi pi-calendar',
         routerLink: '/calendar'
-      }*/
+      }
     ];
     this.getUserAuth();
   }
