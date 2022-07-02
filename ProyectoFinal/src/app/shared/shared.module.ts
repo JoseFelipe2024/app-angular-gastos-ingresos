@@ -17,13 +17,14 @@ import { CommonModule } from "@angular/common";
 import { ToastrModule, ToastrService } from "ngx-toastr";
 import { MatIconModule } from "@angular/material/icon";
 import {AvatarModule} from 'primeng/avatar';
+import {MenuModule} from 'primeng/menu';
 
 @NgModule({
     declarations: [MenuComponent,  AddTransactionComponent, ViewEvidenceComponent],
     imports: [ButtonModule, MatDialogModule, ToastrModule.forRoot(), MatFormFieldModule,
       MatInputModule, MatFormFieldModule, MatNativeDateModule, MatDatepickerModule, 
       MatButtonModule, FormsModule,CommonModule, ReactiveFormsModule, MatDividerModule,
-      MatIconModule, AvatarModule,
+      MatIconModule, AvatarModule, MenuModule,
       MenubarModule, CoreModule],
     providers: [ToastrService],
     exports: [MenuComponent, AddTransactionComponent, ViewEvidenceComponent],

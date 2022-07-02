@@ -1,6 +1,8 @@
 <p-menubar [model]="items">
-    <!--p-avatar [label]="getInitialName" size="large"
-    ></p-avatar-->
-    <button (click)="logout()" pButton label="Cerrar Sesión" class="p-button-outlined" icon="pi pi-power-off">
-    </button>
+    <p-avatar [label]="getInitialName" size="large" (click)="menu.toggle($event)"
+    [style]="{'background-color':'rgb(63 81 181)', 'color': '#ffffff', 'cursor' : 'pointer'}"
+    shape="circle"
+    ></p-avatar>
 </p-menubar>
+
+<p-menu #menu [popup]="true" [model]="itemsSubMenu"></p-menu>

@@ -10,6 +10,7 @@ import { UserAuth } from '../../models/userAuth.model';
 })
 export class MenuComponent implements OnInit {
   items!: MenuItem[];
+  itemsSubMenu!: MenuItem[];
   user!: UserAuth;
 
   constructor(private auth: AuthService) {}
@@ -42,13 +43,18 @@ export class MenuComponent implements OnInit {
         routerLink: '/calendar'
       }
     ];
-    this.getUserAuth();
-  }
-
-  private getUserAuth(){
-    this.auth.getUserAuth().subscribe(user => {
-      this.user = user;
-    });
+    this.itemsSubMenu = [
+      /*{
+        label: 'Perfil',
+        icon: 'pi pi-fw pi-user',
+      },*/
+      {
+        label: 'Cerrar Sesión',
+        icon: 'pi pi-power-off',
+        command: () => { this.logout() },
+      },
+    ]
+    this.user = this.auth.getUser();
   }
 
   logout(){
