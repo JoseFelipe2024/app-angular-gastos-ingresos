@@ -17,7 +17,8 @@
             (viewDateChange)="closeOpenMonthViewDay()">
             Anterior
           </div>
-          <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
+          <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate"
+          (viewDateChange)="closeOpenMonthViewDay()">
             Hoy
           </div>
           <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
@@ -31,14 +32,16 @@
       </div>
       <div class="col-md-4">
         <div class="btn-group">
-          <div class="btn btn-primary" (click)="setView(CalendarView.Month)"
-            [class.active]="view === CalendarView.Month">
+          <div class="btn" (click)="setView(CalendarView.Month)"
+          [ngClass]="currentClass(CalendarView.Month)">
             Mes
           </div>
-          <div class="btn btn-primary" (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week">
+          <div class="btn" (click)="setView(CalendarView.Week)" 
+          [ngClass]="currentClass(CalendarView.Week)">
             Semana
           </div>
-          <div class="btn btn-primary" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">
+          <div class="btn" (click)="setView(CalendarView.Day)" 
+          [ngClass]="currentClass(CalendarView.Day)">
             Dia
           </div>
         </div>

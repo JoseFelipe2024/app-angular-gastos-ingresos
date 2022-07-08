@@ -165,6 +165,12 @@ export class CalendarComponent implements OnInit {
     this.events = [];
     const filter = this.transactionOriginalList?.filter(t => t?.type === event);
     this.setEvents(filter?.length > 0 ? [...filter] : [...this.transactionOriginalList]);
+    this.closeOpenMonthViewDay();
   }
+
+  currentClass(calendar: any){
+    return this.view === calendar ? 'btn-primary' : 'btn-outline-secondary';
+  }
+
 
 }
