@@ -50,7 +50,7 @@ export class IncomeComponent implements OnInit {
           }
         },
         (error) => {
-          this.toastr.error('Ha ocurriodo un error al cargar los ingresos');
+          this.toastr.error('Ha ocurrido un error al cargar los ingresos');
         }
       );
   }
