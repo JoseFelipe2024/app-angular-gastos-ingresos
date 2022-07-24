@@ -44,7 +44,7 @@ export class BillsComponent implements OnInit {
         this.toastr.error(res.message, '');
       }
     }, error => {
-      this.toastr.error('Ha ocurriodo un error al cargar los gastos');
+      this.toastr.error('Ha ocurrido un error al cargar los gastos');
     })
   }
 
