@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
       this.transactions = res.data;
       this.setData();
     }, error => {
-      this.toastr.error('Ha ocurriodo un error al cargar los datos');
+      this.toastr.error('Ha ocurrido un error al cargar los datos');
     });
   }
 
