@@ -46,7 +46,7 @@ export class IncomeBillComponent implements OnInit {
       this.transaction = res.data;
       this.transactionOriginalList = res.data;
     }, error => {
-      this.toastr.error('Ha ocurriodo un error al cargar los datos');
+      this.toastr.error('Ha ocurrido un error al cargar los datos');
     });
   }
 
