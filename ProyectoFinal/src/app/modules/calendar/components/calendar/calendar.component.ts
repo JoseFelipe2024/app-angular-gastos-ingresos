@@ -95,7 +95,7 @@ export class CalendarComponent implements OnInit {
       this.transactionOriginalList = res.data;
       this.setEvents([...this.transactionOriginalList])
     }, error => {
-      this.toastr.error('Ha ocurriodo un error al cargar los datos');
+      this.toastr.error('Ha ocurrido un error al cargar los datos');
     });
   }
 
