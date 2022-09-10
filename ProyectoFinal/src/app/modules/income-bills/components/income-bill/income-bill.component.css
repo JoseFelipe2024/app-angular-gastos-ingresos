@@ -3,5 +3,11 @@
 }*/
 
 .p-button{
-    min-height: 39px !important;
+    max-height: 38px !important;
+    padding: 0 0 0 0;
+}
+
+.p-splitbutton{
+    max-height: 38px !important;
+    margin-right: 8px !important;
 }

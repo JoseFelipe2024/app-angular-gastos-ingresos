@@ -7,6 +7,7 @@ import { LoandingInterceptorInterceptor } from "./interceptors/loanding-intercep
 import { JwtInterceptor } from "./interceptors/jwt.interceptor";
 import { JwtModule } from "@auth0/angular-jwt";
 import { UserAuth } from "../shared/models/userAuth.model";
+import { ExportService } from "./services/export.service";
 
 
 
@@ -15,7 +16,7 @@ import { UserAuth } from "../shared/models/userAuth.model";
     declarations: [],
     imports: [ HttpClientModule, SharedModule ],
     providers: [
-      TransactionBaseService, 
+      TransactionBaseService, ExportService,
       {
         provide: HTTP_INTERCEPTORS, useClass: LoandingInterceptorInterceptor,
         multi: true

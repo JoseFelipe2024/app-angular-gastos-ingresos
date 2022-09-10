@@ -8,6 +8,8 @@ import { ViewEvidenceComponent } from 'src/app/shared/components/view-evidence/v
 import { take } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { MenuItem } from 'primeng/api';
+import { ExportService } from 'src/app/core/services/export.service';
 
 @Component({
   selector: 'app-income-bill',
@@ -16,6 +18,7 @@ import { ToastrService } from 'ngx-toastr';
   encapsulation: ViewEncapsulation.None,
 })
 export class IncomeBillComponent implements OnInit {
+  menuExportItems: MenuItem[] = [];
   transaction: Transaction[] = [];
   transactionOriginalList: Transaction[] = [];
   selectedValue: any = null;
@@ -35,14 +38,22 @@ export class IncomeBillComponent implements OnInit {
 
   p: number = 1;
 
-  constructor(public dialog: MatDialog,  private toastr: ToastrService, private transactionBaseService: TransactionBaseService) { }
+  constructor(public dialog: MatDialog, private exportService: ExportService,  private toastr: ToastrService, private transactionBaseService: TransactionBaseService) { }
 
   ngOnInit(): void {
     this.getTransactions();
+    this.menuExportItems = [{
+      label: 'Exportar a Excel',
+      icon: 'pi pi-file-excel',
+      command: () => {
+        this.exportToExcel();
+      }
+    }]
   }
 
   getTransactions(){
     this.transactionBaseService.getTransactions().subscribe((res: ApiResponse<Transaction[]>) => {
+      console.log(res.data[0])
       this.transaction = res.data;
       this.transactionOriginalList = res.data;
     }, error => {
@@ -105,6 +116,32 @@ export class IncomeBillComponent implements OnInit {
       },
      
     });
+  }
+
+  private exportToExcel(){
+    let excelHeaders: string[][] = [[
+      "Id",
+      "Monto",
+      "Fecha",
+      "Descripción",
+      "Tipo",
+      "Fecha Creada",
+      "Fecha Actualizada",
+      "UserId",
+      "User",
+    ],
+    [
+      "id",
+      "amount",
+      "date",
+      "description",
+      "type",
+      "createDate",
+      "updateDate",
+      "userId",
+      "user"
+    ]];
+    this.exportService.exportToExcelSpecificColumns(this.transaction, excelHeaders, 'Transaciones', true);
   }
 
 }

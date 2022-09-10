@@ -12,10 +12,12 @@ import {CalendarModule} from 'primeng/calendar';
 import {InputNumberModule} from 'primeng/inputnumber';
 import { NgxPaginationModule } from "ngx-pagination";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import {SplitButtonModule} from 'primeng/splitbutton';
+
 
 @NgModule({
     declarations: [IncomeBillComponent],
-    imports: [IncomeBillRoutingModule, FormsModule, 
+    imports: [IncomeBillRoutingModule, FormsModule, SplitButtonModule,
       ButtonModule, DropdownModule, CalendarModule, NgxPaginationModule,
        MatTooltipModule, CommonModule, CoreModule, InputNumberModule],
     providers: [],

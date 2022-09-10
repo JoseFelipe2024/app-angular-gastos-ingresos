@@ -2,6 +2,11 @@
   <div class="card-header flex justify-content-end flex-wrap card-container">
     <div class="formgroup-inline">
       <div class="flex align-items-center justify-content-center">
+        <p-splitButton label="Normal" styleClass="bg-primary" [model]="menuExportItems">
+          <ng-template pTemplate="content">
+              <span class="ml-2 flex align-items-center font-bold">Exportar</span>
+          </ng-template>
+      </p-splitButton>
         <select class="form-select mr-2" [(ngModel)]="selectedValue">
           <option selected disabled value="null">Tipo de Transacción</option>
           <option [ngValue]="item.id" *ngFor="let item of typesTransaction">{{item.name}}</option>

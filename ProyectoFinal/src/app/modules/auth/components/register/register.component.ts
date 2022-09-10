@@ -69,7 +69,7 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    const user: User = this.form.value;
+    const user: User = this.form?.value;
 
     this.auth.createUser(user).subscribe(res => {
       if(res.succeeded){
