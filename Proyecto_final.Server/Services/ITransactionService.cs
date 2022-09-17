@@ -11,6 +11,7 @@ namespace Proyecto_final.Server.Services
         Task<IEnumerable<Transaction>> GetTransactions(int UserId);
         Task<IEnumerable<Transaction>> GetTransactionByType(int type, int UserId);
         Task<int> AddTransaction(Transaction transaction);
+        Task BulkAddTransaction(List<Transaction> transactions);
         Task<int> UpdateTransaction(Transaction transaction);
         Task<int> DeleteTransaction(int id);
     }

@@ -74,6 +74,23 @@ namespace Proyecto_final.Server.Controllers
             return Ok(response);
         }
 
+        [HttpPost("bulkLoad")]
+        public async Task<ActionResult<ApiResponse<int>>> PostBuldLoad([FromBody] List<Transaction> transaction)
+        {
+            var response = new ApiResponse<int>();
+            try
+            {
+                await this.transaction.BulkAddTransaction(transaction);
+            }
+            catch (Exception ex)
+            {
+                response.Message = "Ocurrió un error al insertar el nuevo registro";
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
+
         [HttpPut]
         public async Task<ActionResult<ApiResponse<int>>> Update([FromBody] Transaction transaction)
         {

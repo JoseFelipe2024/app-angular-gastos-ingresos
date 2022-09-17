@@ -46,5 +46,11 @@ namespace Proyecto_final.Server.Services
             this.transactionDbContext.Attach(transaction).State = EntityState.Modified;
             return await this.transactionDbContext.SaveChangesAsync();
         }
+
+        public async Task BulkAddTransaction(List<Transaction> transactions)
+        {
+            await  this.transactionDbContext.AddRangeAsync(transactions);
+            await this.transactionDbContext.SaveChangesAsync();
+        }
     }
 }

@@ -10,8 +10,8 @@ using Proyecto_final.Server.Data;
 namespace Proyecto_final.Server.Migrations
 {
     [DbContext(typeof(TransactionDbContext))]
-    [Migration("20220618210217_Initial")]
-    partial class Initial
+    [Migration("20220917143614_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

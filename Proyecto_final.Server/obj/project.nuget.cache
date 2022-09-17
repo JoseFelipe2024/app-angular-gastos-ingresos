@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "L4sBwPV96PH+qu+Gh0Ym12ZdqoC8sd0+iHYtdXSfdZyaOVpyJc0DF4Z802eavUIBHkMJK2kyNp/rt8ewOhqaXA==",
+  "dgSpecHash": "4mwC9QIua9mRKBbrM2NrwffbAMcYh6vDoe4KLbOiQ9sU+CXXHyjNgu0ijnztTSqHlQm6A2t0/mlwBhbqaElQDA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Erinxon\\Desktop\\ITLA\\Curso Desarrollo Web Front-End Con Angular-2022-T-2-Julio Jose Capellan Vasquez\\Proyecto_Final\\Proyecto_final.Server\\Proyecto_final.Server.csproj",
+  "projectFilePath": "C:\\Users\\Erinxon\\Desktop\\app-angular-gastos-ingresos\\Proyecto_final.Server\\Proyecto_final.Server.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Erinxon\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
     "C:\\Users\\Erinxon\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
