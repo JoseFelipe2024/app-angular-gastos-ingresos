@@ -132,6 +132,7 @@ export class IncomeComponent implements OnInit {
   }
 
   clearSearch(){
+    this.from = null;
     this.to = null;
     this.transaction = [...this.transactionOriginalList];
   }
