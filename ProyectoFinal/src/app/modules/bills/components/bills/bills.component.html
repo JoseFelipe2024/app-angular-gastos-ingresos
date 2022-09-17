@@ -6,10 +6,14 @@
     </div>
     <div class="formgroup-inline">
       <div class="flex align-items-center justify-content-center">
-
-        <input type="date" [(ngModel)]="date" placeholder="Fecha" class="form-control mr-2">
-        <input type="number" [(ngModel)]="amount" placeholder="Monto" class="form-control mr-2">
-     
+        <div class="input-group">
+          <div class="input-group-text" id="btnGroupAddon2">Desde</div>
+          <input type="date" [(ngModel)]="from" placeholder="Fecha" class="form-control mr-2">
+        </div>
+        <div class="input-group">
+          <div class="input-group-text" id="btnGroupAddon2">Hasta</div>
+          <input type="date" [(ngModel)]="to" placeholder="Fecha" class="form-control mr-2">
+        </div>
         <button  (click)="clearSearch()" class="btn btn-outline-secondary mr-2" type="button">Limpiar</button>
         <button (click)="filter()" class="btn btn-primary" type="button">Buscar</button>
       </div>

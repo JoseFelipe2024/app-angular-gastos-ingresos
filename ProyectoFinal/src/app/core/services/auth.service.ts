@@ -1,7 +1,7 @@
 import { HttpBackend, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, delay, map, Observable, retryWhen, take } from 'rxjs';
 import { ApiResponse } from 'src/app/shared/models/apiResponse.model';
 import { LoginModel } from 'src/app/shared/models/Login.model';
 import { User } from 'src/app/shared/models/user.model';
@@ -25,17 +25,23 @@ export class AuthService {
     private http: HttpClient,
     private router: Router,
     private httpClientCustom: HttpClientIgnoreInterceptorService
-  ) {}
+  ) { }
 
-  existEmail(email: string): Observable<ApiResponse<boolean>>{
-    return this.httpClientCustom.httpClientCustom.get<ApiResponse<boolean>>(`${this.api_url}/Users/ExistEmail?email=${email}`);
+  existEmail(email: string): Observable<ApiResponse<boolean>> {
+    return this.httpClientCustom.httpClientCustom.get<ApiResponse<boolean>>(`${this.api_url}/Users/ExistEmail?email=${email}`)
+      .pipe(
+        retryWhen(errors => errors.pipe(delay(500), take(4)))
+      );;
   }
 
   login(loginModel: LoginModel): Observable<ApiResponse<UserAuth>> {
-    return this.http.post<ApiResponse<UserAuth>>(`${this.api_url}/Auth`, loginModel);
+    return this.http.post<ApiResponse<UserAuth>>(`${this.api_url}/Auth`, loginModel)
+      .pipe(
+        retryWhen(errors => errors.pipe(delay(500), take(3)))
+      );;
   }
 
-  createUser(user: User): Observable<ApiResponse<number>>{
+  createUser(user: User): Observable<ApiResponse<number>> {
     return this.http.post<ApiResponse<number>>(`${this.api_url}/Users`, user);
   }
 
@@ -48,7 +54,7 @@ export class AuthService {
     this.userAuth.next(user);
   }
 
-  getUser(): UserAuth{
+  getUser(): UserAuth {
     return this.LocalStorageService.getItem('user');
   }
 
@@ -62,5 +68,5 @@ export class AuthService {
     this.router.navigate(['/auth/login']);
   }
 
-  
+
 }

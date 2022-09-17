@@ -33,12 +33,11 @@ export class IncomeBillComponent implements OnInit {
       name: 'Gasto'
     },
   ];
-  amount: number = 0;
-  date!: Date;
-
+  from!: Date | null;
+  to!: Date | null;
   p: number = 1;
 
-  constructor(public dialog: MatDialog, private exportService: ExportService,  private toastr: ToastrService, private transactionBaseService: TransactionBaseService) { }
+  constructor(public dialog: MatDialog, private exportService: ExportService, private toastr: ToastrService, private transactionBaseService: TransactionBaseService) { }
 
   ngOnInit(): void {
     this.getTransactions();
@@ -51,9 +50,8 @@ export class IncomeBillComponent implements OnInit {
     }]
   }
 
-  getTransactions(){
+  getTransactions() {
     this.transactionBaseService.getTransactions().subscribe((res: ApiResponse<Transaction[]>) => {
-      console.log(res.data[0])
       this.transaction = res.data;
       this.transactionOriginalList = res.data;
     }, error => {
@@ -61,64 +59,69 @@ export class IncomeBillComponent implements OnInit {
     });
   }
 
-  getTypeTransation(type: TransactionType){
+  getTypeTransation(type: TransactionType) {
     return type === TransactionType.Bill ? 'Gasto' : 'Ingreso';
   }
 
-  getClassButtonEvidence(typeFile: string){
+  getClassButtonEvidence(typeFile: string) {
     return typeFile === 'application/pdf' ? 'pi-file-pdf' : 'pi-image';
   }
 
-  clearSearch(){
-    this.amount = 0;
-    this.date = null!;
+  clearSearch() {
+    this.from = null;
+    this.to = null;
     this.selectedValue = null;
     this.transaction = [...this.transactionOriginalList];
   }
 
-  filter(){
-    if(!this.date && this.amount <= 0 && !this.selectedValue){
+  filter() {
+    if ((!this.from || !this.to) && !this.selectedValue) {
       this.transaction = [...this.transactionOriginalList];
       return;
     }
 
+    if(this.getFormatDate(this.from) >= this.getFormatDate(this.to) ){
+      this.toastr.warning('La fecha inicio no debe ser mayor que la fecha final');
+      return;
+    }
+
     let transaction: any[] = this.getOriginalList.filter(item => {
-       if(item.type === this.selectedValue){
-        return item;
-       }
-       if(this.getFormatDate(this.date) === this.getFormatDate(item.date)){
-         return item;
-       }
-       if(item.amount == this.amount){
+      if(!this.selectedValue) {
+        if (this.getFormatDate(item?.date) >= this.getFormatDate(this.from) && this.getFormatDate(item?.date) <= this.getFormatDate(this.to)) {
           return item;
-       }
-       return;
+        }
+        return;
+      }
+      if ((this.getFormatDate(item?.date) >= this.getFormatDate(this.from) && this.getFormatDate(item?.date) <= this.getFormatDate(this.to)) && item.type === this.selectedValue) {
+        return item;
+      }
+      return;
     });
     this.transaction = transaction
   }
 
-  private get getOriginalList(){
+  private get getOriginalList() {
     return [...this.transactionOriginalList.map(t => {
-      return {...t}
+      return { ...t }
     })];
   }
 
-  getFormatDate(date: any){
-    if(!date) return;
+  getFormatDate(date: any) {
+    if (!date) return '';
     return formatDate(date, 'MM-yyyy-dd', 'en-US');
   }
 
-  openViewEvidenceComponent(transaction: Transaction){
-    this.dialog.open(ViewEvidenceComponent,{
+  openViewEvidenceComponent(transaction: Transaction) {
+    this.dialog.open(ViewEvidenceComponent, {
       data: {
         typeFile: transaction.typeFile,
         base64: transaction.evidence
       },
-     
+
     });
   }
 
-  private exportToExcel(){
+  private exportToExcel() {
     let excelHeaders: string[][] = [[
       "Id",
       "Monto",

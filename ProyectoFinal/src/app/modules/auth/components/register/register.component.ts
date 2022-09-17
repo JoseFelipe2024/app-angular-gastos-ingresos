@@ -36,7 +36,10 @@ export class RegisterComponent implements OnInit {
       password: ['', [Validators.required]],
       repeatPassword: ['', [Validators.required]],
     }, 
-    { validator: checkPasswords('password', 'repeatPassword') });
+    { validator: checkPasswords('password', 'repeatPassword'), 
+      updateOn: 'blur'
+     },
+    );
   }
 
   get email() {

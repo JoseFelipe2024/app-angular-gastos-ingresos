@@ -23,9 +23,8 @@ export class IncomeComponent implements OnInit {
   transaction: Transaction[] = [];
   transactionOriginalList: Transaction[] = [];
   p: number = 1;
-  amount: number = 0;
-  date!: Date;
-
+  from!: Date | null;
+  to!: Date | null;
   constructor(
     public dialog: MatDialog,
     private toastr: ToastrService,
@@ -133,30 +132,30 @@ export class IncomeComponent implements OnInit {
   }
 
   clearSearch(){
-    this.amount = 0;
-    this.date = null!;
+    this.to = null;
     this.transaction = [...this.transactionOriginalList];
   }
 
   filter(){
-    if(!this.date && this.amount <= 0){
+    if(!this.from || !this.to){
       this.transaction = [...this.transactionOriginalList];
       return;
     }
+    if(this.getFormatDate(this.from) >= this.getFormatDate(this.to) ){
+      this.toastr.warning('La fecha inicio no debe ser mayor que la fecha final');
+      return;
+    }
     let transaction: any[] = this.getOriginalList.filter(item => {
-       if(this.getFormatDate(this.date) === this.getFormatDate(item.date)){
-         return item;
-       }
-       if(item.amount == this.amount){
-          return item;
-       }
+      if (this.getFormatDate(item?.date) >= this.getFormatDate(this.from) && this.getFormatDate(item?.date) <= this.getFormatDate(this.to)) {
+        return item;
+      }
        return;
     });
     this.transaction = transaction;
   }
 
   getFormatDate(date: any){
-    if(!date) return;
+    if(!date) return '';
     return formatDate(date, 'MM-yyyy-dd', 'en-US');
   }
 

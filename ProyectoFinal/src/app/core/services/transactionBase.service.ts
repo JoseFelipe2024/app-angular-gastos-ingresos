@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, delay, map, Observable, retryWhen, scan, take } from "rxjs";
 import { ApiResponse } from "src/app/shared/models/apiResponse.model";
 import { Bill } from "src/app/shared/models/bill.model";
 import { Income } from "src/app/shared/models/income.model";
@@ -18,11 +18,17 @@ export class TransactionBaseService{
     }
 
     getTransactions(): Observable<ApiResponse<Transaction[]>> {
-        return this.http.get<ApiResponse<Transaction[]>>(`${this.api_url}/Transaction?UserId=${this.auth.getUser()?.id}`);
+        return this.http.get<ApiResponse<Transaction[]>>(`${this.api_url}/Transaction?UserId=${this.auth.getUser()?.id}`)
+        .pipe(
+            retryWhen(errors => errors.pipe(delay(500), take(3)))
+       );
     }
 
     getTransactionsByType(type: TransactionType): Observable<ApiResponse<Transaction[]>> {
-        return this.http.get<ApiResponse<Transaction[]>>(`${this.api_url}/Transaction/Type?type=${type}&UserId=${this.auth.getUser()?.id}`);
+        return this.http.get<ApiResponse<Transaction[]>>(`${this.api_url}/Transaction/Type?type=${type}&UserId=${this.auth.getUser()?.id}`)
+        .pipe(
+            retryWhen(errors => errors.pipe(delay(500), take(3)))
+       );;
     }
 
     addTransaction(transaction: Transaction):  Observable<ApiResponse<number>> {
