@@ -166,4 +166,8 @@ export class IncomeComponent implements OnInit {
     })];
   }
 
+  get getTotalAmount(){
+    return this.transaction.reduce((previous, currentValue) => currentValue.amount + previous, 0);
+  }
+
 }

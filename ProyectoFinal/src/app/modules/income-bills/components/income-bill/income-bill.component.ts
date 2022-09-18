@@ -153,4 +153,8 @@ export class IncomeBillComponent implements OnInit {
     this.exportService.exportToExcelSpecificColumns(this.transaction, excelHeaders, 'Transaciones', true);
   }
 
+  get getTotalAmount(){
+    return this.transaction.reduce((previous, currentValue) => currentValue.amount + previous, 0);
+  }
+
 }
