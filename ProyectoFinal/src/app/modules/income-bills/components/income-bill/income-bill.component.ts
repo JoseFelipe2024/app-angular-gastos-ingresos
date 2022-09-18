@@ -79,14 +79,20 @@ export class IncomeBillComponent implements OnInit {
       this.transaction = [...this.transactionOriginalList];
       return;
     }
-
-    if(this.getFormatDate(this.from) >= this.getFormatDate(this.to) ){
-      this.toastr.warning('La fecha inicio no debe ser mayor que la fecha final');
-      return;
+    if(this.from && this.to){
+      if(this.getFormatDate(this.from) >= this.getFormatDate(this.to) ){
+        this.toastr.warning('La fecha inicio no debe ser mayor que la fecha final');
+        return;
+      }
     }
-
     let transaction: any[] = this.getOriginalList.filter(item => {
-      if(!this.selectedValue) {
+      if(this.selectedValue && (!this.from || !this.to)) {
+        if (item.type === this.selectedValue) {
+          return item;
+        }
+        return;
+      }
+      if(!this.selectedValue && (this.from || this.to)) {
         if (this.getFormatDate(item?.date) >= this.getFormatDate(this.from) && this.getFormatDate(item?.date) <= this.getFormatDate(this.to)) {
           return item;
         }
