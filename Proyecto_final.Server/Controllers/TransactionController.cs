@@ -32,6 +32,7 @@ namespace Proyecto_final.Server.Controllers
             try
             {
                 response.Data = await this.transaction.GetTransactions(UserId);
+
             }
             catch (Exception ex)
             {
