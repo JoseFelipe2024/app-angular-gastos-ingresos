@@ -26,7 +26,6 @@ export class JwtInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     const user = this.auth.getUser();
-    console.log((process?.env as any)?.Apikey)
     if (user?.token) {
       const isExpired = this.jwtHelperService.isTokenExpired(user?.token);
       if (isExpired) {
