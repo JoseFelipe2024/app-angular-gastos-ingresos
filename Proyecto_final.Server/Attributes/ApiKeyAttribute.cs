@@ -28,9 +28,8 @@ namespace Proyecto_final.Server.Attributes
 
             var Configuration = context.HttpContext.RequestServices.GetRequiredService<IConfiguration>();
             var apiKey = Configuration["apikey"];
-            var envApiKey = Environment.GetEnvironmentVariable("apikey");
 
-            if (apiKey is not null ? !apiKey.Equals(extractedApiKey) : !envApiKey.Equals(extractedApiKey))
+            if (!apiKey.Equals(extractedApiKey))
             {
                 context.Result = new ContentResult()
                 {
