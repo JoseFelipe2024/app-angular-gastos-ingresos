@@ -40,7 +40,7 @@ export class AuthService {
         retryWhen(error => {
           return error.pipe(
             mergeMap(error => {
-              if (error.status !== 401) {
+              if (error.status !== 401 && error.status !== 404){
                   return of(error);
               }
               return throwError(error);

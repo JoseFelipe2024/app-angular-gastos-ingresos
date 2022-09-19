@@ -42,11 +42,7 @@ export class LoginComponent implements OnInit {
       }
       this.toastr.error(res.message);
     }, error => {
-      if(error?.status === 401){
-        this.toastr.error(error?.error);
-        return;
-      }
-      this.toastr.error(error?.error?.message ?? 'Ups, algo salió mal en el servidor.');
+      this.toastr.error(error?.status === 401 ? error?.error : error?.status === 404 ? error?.error?.message : 'Ups, algo salió mal en el servidor.');
     })
   }
 
