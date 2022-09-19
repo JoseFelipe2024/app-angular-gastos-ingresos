@@ -6,11 +6,12 @@ import {
   HttpInterceptor,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { catchError, EMPTY, Observable, throwError } from 'rxjs';
+import { catchError, EMPTY, Observable, retry, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { use } from 'echarts';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {

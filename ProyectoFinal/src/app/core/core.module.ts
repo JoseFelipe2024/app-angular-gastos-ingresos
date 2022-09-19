@@ -8,6 +8,7 @@ import { JwtInterceptor } from "./interceptors/jwt.interceptor";
 import { JwtModule } from "@auth0/angular-jwt";
 import { UserAuth } from "../shared/models/userAuth.model";
 import { ExportService } from "./services/export.service";
+import { ApiKeyInterceptor } from "./interceptors/api-key.interceptor";
 
 
 
@@ -26,6 +27,9 @@ import { ExportService } from "./services/export.service";
       },
       {
         provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true
+      },
+      {
+        provide: HTTP_INTERCEPTORS, useClass: ApiKeyInterceptor, multi: true
       }
     ],
     bootstrap: [CoreModule],

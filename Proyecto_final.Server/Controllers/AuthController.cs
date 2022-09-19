@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Proyecto_final.Server.ApiResponse;
+using Proyecto_final.Server.Attributes;
 using Proyecto_final.Server.Dtos;
 using Proyecto_final.Server.Services;
 using Proyecto_final.Server.Tools;
@@ -13,6 +14,7 @@ namespace Proyecto_final.Server.Controllers
 {
     [ApiController]
     [Route("api/[Controller]")]
+    [ApiKey]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService authService;

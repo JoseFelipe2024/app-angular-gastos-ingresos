@@ -38,9 +38,10 @@ namespace Proyecto_final.Server
             {
                 builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
             }));
+            var DefaultConnection = Configuration["DefaultConnection"];
             services.AddDbContext<TransactionDbContext>(option =>
             {
-                option.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
+                option.UseNpgsql(DefaultConnection);
             });
             services.AddSwaggerGen(c =>
             {

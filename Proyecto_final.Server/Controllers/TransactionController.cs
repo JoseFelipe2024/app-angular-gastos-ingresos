@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Proyecto_final.Server.ApiResponse;
+using Proyecto_final.Server.Attributes;
 using Proyecto_final.Server.Models;
 using Proyecto_final.Server.Services;
 using System;
@@ -13,6 +14,7 @@ namespace Proyecto_final.Server.Controllers
     [ApiController]
     [Route("api/[Controller]")]
     [Authorize]
+    [ApiKey]
     public class TransactionController : ControllerBase
     {
         private readonly ITransactionService transaction;

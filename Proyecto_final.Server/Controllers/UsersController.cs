@@ -10,11 +10,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Proyecto_final.Server.Dtos;
+using Proyecto_final.Server.Attributes;
 
 namespace Proyecto_final.Server.Controllers
 {
     [ApiController]
     [Route("api/[Controller]")]
+    [ApiKey]
     public class UsersController : ControllerBase
     {
         private readonly IUserService userService;

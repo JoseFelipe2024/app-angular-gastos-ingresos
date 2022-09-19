@@ -1,7 +1,7 @@
 import { HttpBackend, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, delay, map, Observable, retryWhen, take } from 'rxjs';
+import { BehaviorSubject, delay, map, mergeMap, Observable, of, retryWhen, scan, take, tap, throwError } from 'rxjs';
 import { ApiResponse } from 'src/app/shared/models/apiResponse.model';
 import { LoginModel } from 'src/app/shared/models/Login.model';
 import { User } from 'src/app/shared/models/user.model';
@@ -37,7 +37,17 @@ export class AuthService {
   login(loginModel: LoginModel): Observable<ApiResponse<UserAuth>> {
     return this.http.post<ApiResponse<UserAuth>>(`${this.api_url}/Auth`, loginModel)
       .pipe(
-        retryWhen(errors => errors.pipe(delay(500), take(3)))
+        retryWhen(error => {
+          return error.pipe(
+            mergeMap(error => {
+              if (error.status !== 401) {
+                  return of(error);
+              }
+              return throwError(error);
+           }),
+              delay(500), take(2)
+          );
+      }),
       );;
   }
 
