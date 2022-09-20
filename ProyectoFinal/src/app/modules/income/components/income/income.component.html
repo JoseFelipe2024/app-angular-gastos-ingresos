@@ -27,7 +27,7 @@
             <th scope="col">Monto</th>
             <th scope="col">Fecha</th>
             <th scope="col">Descripción</th>
-            <th scope="col" class="text-center">Comprobante</th>
+            <!-- <th scope="col" class="text-center">Comprobante</th> -->
             <th scope="col" class="text-center">Acciones</th>
           </tr>
         </thead>
@@ -36,7 +36,7 @@
             <td>{{item.amount | currency}}</td>
             <td>{{item.date | date: 'dd/MM/yyyy'}}</td>
             <td>{{item.description}}</td>
-            <td class="text-center">
+            <!-- <td class="text-center">
               <ng-container *ngIf="item.evidence; else noEvidence">
                 <button pButton (click)="openViewEvidenceComponent(item)" type="button" matTooltip="Comprobante"
                   matTooltipClass="tooltip-red" label="" icon="pi {{getClassButtonEvidence(item.typeFile)}}"
@@ -45,7 +45,7 @@
               <ng-template #noEvidence>
                 N/A
               </ng-template>
-            </td>
+            </td> -->
             <td class="text-center formgroup-inline">
               <button (click)="edit(item)" pButton type="button" matTooltip="Editar" matTooltipClass="tooltip-red"
                 label="" icon="pi pi-pencil" class="p-button p-button-secundary mr-2"></button>
