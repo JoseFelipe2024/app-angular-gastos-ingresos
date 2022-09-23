@@ -40,19 +40,22 @@ export class AuthService {
         retryWhen(error => {
           return error.pipe(
             mergeMap(error => {
-              if (error.status !== 401 && error.status !== 404){
-                  return of(error);
+              if (error.status !== 401 && error.status !== 404) {
+                return of(error);
               }
               return throwError(error);
-           }),
-              delay(500), take(2)
+            }),
+            delay(500), take(2)
           );
-      }),
+        }),
       );;
   }
 
   createUser(user: User): Observable<ApiResponse<number>> {
-    return this.http.post<ApiResponse<number>>(`${this.api_url}/Users`, user);
+    return this.http.post<ApiResponse<number>>(`${this.api_url}/Users`, user)
+      .pipe(
+        retryWhen(errors => errors.pipe(delay(100), take(3)))
+      );
   }
 
   isAutehticated(): Observable<boolean> {

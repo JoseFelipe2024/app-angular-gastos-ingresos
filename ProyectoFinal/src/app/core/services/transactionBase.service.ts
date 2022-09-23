@@ -10,33 +10,37 @@ import { environment } from "src/environments/environment";
 import { AuthService } from "./auth.service";
 
 @Injectable()
-export class TransactionBaseService{
+export class TransactionBaseService {
     private readonly api_url = environment.API_URL;
 
-    constructor(private http: HttpClient, private auth: AuthService){
+    constructor(private http: HttpClient, private auth: AuthService) {
 
     }
 
     getTransactions(): Observable<ApiResponse<Transaction[]>> {
         return this.http.get<ApiResponse<Transaction[]>>(`${this.api_url}/Transaction?UserId=${this.auth.getUser()?.id}`)
-        .pipe(
-            retryWhen(errors => errors.pipe(delay(500), take(3)))
-       );
+            .pipe(
+                retryWhen(errors => errors.pipe(delay(500), take(3)))
+            );
     }
 
     getTransactionsByType(type: TransactionType): Observable<ApiResponse<Transaction[]>> {
         return this.http.get<ApiResponse<Transaction[]>>(`${this.api_url}/Transaction/Type?type=${type}&UserId=${this.auth.getUser()?.id}`)
-        .pipe(
-            retryWhen(errors => errors.pipe(delay(500), take(3)))
-       );;
+            .pipe(
+                retryWhen(errors => errors.pipe(delay(500), take(3)))
+            );
     }
 
-    addTransaction(transaction: Transaction):  Observable<ApiResponse<number>> {
-        return this.http.post<ApiResponse<number>>(`${this.api_url}/Transaction`, transaction);
+    addTransaction(transaction: Transaction): Observable<ApiResponse<number>> {
+        return this.http.post<ApiResponse<number>>(`${this.api_url}/Transaction`, transaction).pipe(
+            retryWhen(errors => errors.pipe(delay(100), take(3)))
+        );
     }
 
-    updateTransaction(transaction: Transaction):  Observable<ApiResponse<number>> {
-        return this.http.put<ApiResponse<number>>(`${this.api_url}/Transaction`, transaction);
+    updateTransaction(transaction: Transaction): Observable<ApiResponse<number>> {
+        return this.http.put<ApiResponse<number>>(`${this.api_url}/Transaction`, transaction).pipe(
+            retryWhen(errors => errors.pipe(delay(100), take(3)))
+        );
     }
 
     deleteTransactions(id: number): Observable<ApiResponse<number>> {
