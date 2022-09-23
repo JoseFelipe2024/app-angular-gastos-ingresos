@@ -80,7 +80,7 @@ export class IncomeBillComponent implements OnInit {
       return;
     }
     if(this.from && this.to){
-      if(this.getFormatDate(this.from) >= this.getFormatDate(this.to) ){
+      if(this.getFormatDate(this.from) > this.getFormatDate(this.to) ){
         this.toastr.warning('La fecha inicio no debe ser mayor que la fecha final');
         return;
       }

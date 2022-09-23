@@ -127,7 +127,7 @@ export class BillsComponent implements OnInit {
       this.transaction = [...this.transactionOriginalList];
       return;
     }
-    if(this.getFormatDate(this.from) >= this.getFormatDate(this.to) ){
+    if(this.getFormatDate(this.from) > this.getFormatDate(this.to) ){
       this.toastr.warning('La fecha inicio no debe ser mayor que la fecha final');
       return;
     }
