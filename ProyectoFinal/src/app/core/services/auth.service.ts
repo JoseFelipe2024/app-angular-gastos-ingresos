@@ -28,7 +28,11 @@ export class AuthService {
   ) { }
 
   existEmail(email: string): Observable<ApiResponse<boolean>> {
-    return this.httpClientCustom.httpClientCustom.get<ApiResponse<boolean>>(`${this.api_url}/Users/ExistEmail?email=${email}`)
+    return this.httpClientCustom.httpClientCustom.get<ApiResponse<boolean>>(`${this.api_url}/Users/ExistEmail?email=${email}`, {
+      headers: {
+        ApiKey: environment.Apikey
+      }
+      })
       .pipe(
         retryWhen(errors => errors.pipe(delay(500), take(4)))
       );;
