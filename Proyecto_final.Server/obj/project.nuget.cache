@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "4mwC9QIua9mRKBbrM2NrwffbAMcYh6vDoe4KLbOiQ9sU+CXXHyjNgu0ijnztTSqHlQm6A2t0/mlwBhbqaElQDA==",
+  "dgSpecHash": "lxDCmJPfu3OpVcKGvKcBLs7By4a4IVaayaBjYitguUtIs1aBgrCtR7nNEvlOEHkNy6y64kTowe1o3T7tu1NvdA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Erinxon\\Desktop\\app-angular-gastos-ingresos\\Proyecto_final.Server\\Proyecto_final.Server.csproj",
   "expectedPackageFiles": [
@@ -32,6 +32,7 @@
     "C:\\Users\\Erinxon\\.nuget\\packages\\microsoft.identitymodel.protocols.openidconnect\\6.7.1\\microsoft.identitymodel.protocols.openidconnect.6.7.1.nupkg.sha512",
     "C:\\Users\\Erinxon\\.nuget\\packages\\microsoft.identitymodel.tokens\\6.19.0\\microsoft.identitymodel.tokens.6.19.0.nupkg.sha512",
     "C:\\Users\\Erinxon\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\Erinxon\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.15.1\\microsoft.visualstudio.azure.containers.tools.targets.1.15.1.nupkg.sha512",
     "C:\\Users\\Erinxon\\.nuget\\packages\\npgsql\\5.0.10\\npgsql.5.0.10.nupkg.sha512",
     "C:\\Users\\Erinxon\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\5.0.10\\npgsql.entityframeworkcore.postgresql.5.0.10.nupkg.sha512",
     "C:\\Users\\Erinxon\\.nuget\\packages\\swashbuckle.aspnetcore\\5.6.3\\swashbuckle.aspnetcore.5.6.3.nupkg.sha512",
