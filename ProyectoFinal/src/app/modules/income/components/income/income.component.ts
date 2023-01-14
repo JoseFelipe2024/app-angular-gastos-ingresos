@@ -12,6 +12,7 @@ import { ViewEvidenceComponent } from 'src/app/shared/components/view-evidence/v
 import { ConfirmationService } from 'primeng/api';
 import { ToastrService } from 'ngx-toastr';
 import { formatDate } from '@angular/common';
+import { getFormatDate } from 'src/app/shared/utils/utils';
 
 @Component({
   selector: 'app-income',
@@ -142,22 +143,17 @@ export class IncomeComponent implements OnInit {
       this.transaction = [...this.transactionOriginalList];
       return;
     }
-    if(this.getFormatDate(this.from) > this.getFormatDate(this.to) ){
+    if(getFormatDate(this.from) > getFormatDate(this.to) ){
       this.toastr.warning('La fecha inicio no debe ser mayor que la fecha final');
       return;
     }
     let transaction: any[] = this.getOriginalList.filter(item => {
-      if (this.getFormatDate(item?.date) >= this.getFormatDate(this.from) && this.getFormatDate(item?.date) <= this.getFormatDate(this.to)) {
+      if (getFormatDate(item?.date) >= getFormatDate(this.from) && getFormatDate(item?.date) <= getFormatDate(this.to)) {
         return item;
       }
        return;
     });
     this.transaction = transaction;
-  }
-
-  getFormatDate(date: any){
-    if(!date) return '';
-    return formatDate(date, 'MM-yyyy-dd', 'en-US');
   }
 
   private get getOriginalList(){
