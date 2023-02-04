@@ -134,6 +134,7 @@ export class BillsComponent implements OnInit {
     }
     let transaction: any[] = this.getOriginalList.filter(item => {
       if (getFormatDate(item?.date) >= getFormatDate(this.from) && getFormatDate(item?.date) <= getFormatDate(this.to)) {
+        console.log(getFormatDate(item?.date))
         return item;
       }
        return;

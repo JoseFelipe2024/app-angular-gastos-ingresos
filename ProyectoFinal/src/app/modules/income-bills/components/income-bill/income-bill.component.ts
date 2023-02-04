@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { MenuItem } from 'primeng/api';
 import { ExportService } from 'src/app/core/services/export.service';
+import { getFormatDate } from 'src/app/shared/utils/utils';
 
 @Component({
   selector: 'app-income-bill',
@@ -80,7 +81,7 @@ export class IncomeBillComponent implements OnInit {
       return;
     }
     if(this.from && this.to){
-      if(this.getFormatDate(this.from) > this.getFormatDate(this.to) ){
+      if(getFormatDate(this.from) > getFormatDate(this.to) ){
         this.toastr.warning('La fecha inicio no debe ser mayor que la fecha final');
         return;
       }
@@ -93,12 +94,12 @@ export class IncomeBillComponent implements OnInit {
         return;
       }
       if(!this.selectedValue && (this.from || this.to)) {
-        if (this.getFormatDate(item?.date) >= this.getFormatDate(this.from) && this.getFormatDate(item?.date) <= this.getFormatDate(this.to)) {
+        if (getFormatDate(item?.date) >= getFormatDate(this.from) && getFormatDate(item?.date) <= getFormatDate(this.to)) {
           return item;
         }
         return;
       }
-      if ((this.getFormatDate(item?.date) >= this.getFormatDate(this.from) && this.getFormatDate(item?.date) <= this.getFormatDate(this.to)) && item.type === this.selectedValue) {
+      if ((getFormatDate(item?.date) >= getFormatDate(this.from) && getFormatDate(item?.date) <= getFormatDate(this.to)) && item.type === this.selectedValue) {
         return item;
       }
       return;
@@ -110,11 +111,6 @@ export class IncomeBillComponent implements OnInit {
     return [...this.transactionOriginalList.map(t => {
       return { ...t }
     })];
-  }
-
-  getFormatDate(date: any) {
-    if (!date) return '';
-    return formatDate(date, 'MM-yyyy-dd', 'en-US');
   }
 
   openViewEvidenceComponent(transaction: Transaction) {
