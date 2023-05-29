@@ -41,10 +41,9 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.transactionBaseService.getTransactions().subscribe((res) => {
-      this.transactionsOriginaList = res?.data;
-      const years = [...new Set(this.transactionsOriginaList?.map(transaction => new Date(transaction?.date)?.getFullYear()))]
-      this.years = years;
-      this.setData();
+      this.transactionsOriginaList = [...res?.data];
+      this.years =  [...new Set(this.transactionsOriginaList?.map(transaction => new Date(transaction?.date)?.getFullYear()))];
+      this.changeYear();
     }, error => {
       this.toastr.error('Ha ocurrido un error al cargar los datos');
     });
@@ -186,8 +185,8 @@ export class HomeComponent implements OnInit {
   }
 
   changeYear(){
-    this.transactions = this.transactionsOriginaList?.filter(transaction => 
-      new Date(transaction?.date)?.getFullYear() === this.yearSeleted);
+    this.transactions = [...this.transactionsOriginaList?.filter(transaction => 
+      new Date(transaction?.date)?.getFullYear() === this.yearSeleted)];
     this.setData();
   }
 
