@@ -11,6 +11,7 @@ import { Transaction } from 'src/app/shared/models/transaction.mode';
 })
 export class HomeComponent implements OnInit {
   options: any;
+  transactionsOriginaList: Transaction[] = [];
   transactions: Transaction[] = [];
 
   optionMonthBills: any;
@@ -30,14 +31,19 @@ export class HomeComponent implements OnInit {
     'Oct',
     'Nov',
     'Dic',
-  ]
+  ];
+
+  years: number[] = [];
+  yearSeleted: number = new Date()?.getFullYear();
 
   constructor(private transactionBaseService: TransactionBaseService, 
     private toastr: ToastrService,) {}
 
   ngOnInit(): void {
     this.transactionBaseService.getTransactions().subscribe((res) => {
-      this.transactions = res.data;
+      this.transactionsOriginaList = res?.data;
+      const years = [...new Set(this.transactionsOriginaList?.map(transaction => new Date(transaction?.date)?.getFullYear()))]
+      this.years = years;
       this.setData();
     }, error => {
       this.toastr.error('Ha ocurrido un error al cargar los datos');
@@ -177,6 +183,12 @@ export class HomeComponent implements OnInit {
         },
       ],
     };
+  }
+
+  changeYear(){
+    this.transactions = this.transactionsOriginaList?.filter(transaction => 
+      new Date(transaction?.date)?.getFullYear() === this.yearSeleted);
+    this.setData();
   }
 
   private getTotalAmountByType(type: TransactionType) {
