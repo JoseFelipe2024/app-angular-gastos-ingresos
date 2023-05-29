@@ -8,3 +8,13 @@
 .card{
     border-color: #3F51B5 !important;
 }
+
+.filter-year{
+    display: flex;
+    justify-content: end;
+    margin-bottom: 2em;
+}
+
+.text-primary{
+    font-weight: bold;
+}
