@@ -2,7 +2,7 @@
     <div>
         <label class="text-primary">Año</label>
         <select class="form-select mr-2" [(ngModel)]="yearSeleted" (change)="changeYear()">
-            <option [ngValue]="item" *ngFor="let item of years">{{item}}</option>
+            <option [ngValue]="year" *ngFor="let year of years">{{year}}</option>
           </select>
     </div>
 </div>
