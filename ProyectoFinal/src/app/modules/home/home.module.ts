@@ -5,6 +5,8 @@ import { HomeRoutingModule } from './home-routing.module';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { CoreModule } from 'src/app/core/core.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -14,6 +16,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
       echarts: () => import('echarts'),
     }),
     CoreModule,
+    CommonModule,
+    FormsModule,
     SharedModule
   ],
   providers: [],
