@@ -18,9 +18,10 @@ import { ToastrModule, ToastrService } from "ngx-toastr";
 import { MatIconModule } from "@angular/material/icon";
 import {AvatarModule} from 'primeng/avatar';
 import {MenuModule} from 'primeng/menu';
+import { FilterComponent } from './components/filter/filter.component';
 
 @NgModule({
-    declarations: [MenuComponent,  AddTransactionComponent, ViewEvidenceComponent],
+    declarations: [MenuComponent,  AddTransactionComponent, ViewEvidenceComponent, FilterComponent],
     imports: [ButtonModule, MatDialogModule, ToastrModule.forRoot(), MatFormFieldModule,
       MatInputModule, MatFormFieldModule, MatNativeDateModule, MatDatepickerModule, 
       MatButtonModule, FormsModule,CommonModule, ReactiveFormsModule, MatDividerModule,

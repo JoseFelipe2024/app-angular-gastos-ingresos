@@ -19,7 +19,7 @@ export class AddTransactionComponent implements OnInit {
   transactionType!: TransactionType;
   title: string = '';
 
-  action: ActionForm = 0;
+  action: ActionForm = ActionForm.add;
   
   constructor(
     public dialogRef: MatDialogRef<AddTransactionComponent>,

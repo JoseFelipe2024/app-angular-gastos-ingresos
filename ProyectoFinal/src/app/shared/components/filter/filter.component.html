@@ -1,0 +1,31 @@
+<mat-dialog-content  class="mat-typography">
+   <div class="row" [formGroup]="form">
+        <div class="col-12">
+            <div class="input-group">
+                <div class="input-group-text" id="btnGroupAddon2">Descripción</div>
+                <input type="text" formControlName="description" class="form-control mr-2">
+              </div>
+        </div>
+        <div class="col-12">
+            <div class="input-group">
+                <div class="input-group-text"  id="btnGroupAddon2">Desde</div>
+                <input type="date" formControlName="from" placeholder="from" class="form-control mr-2">
+              </div>
+        </div>
+        <div class="col-12">
+            <div class="input-group">
+                <div class="input-group-text" id="btnGroupAddon2">Hasta</div>
+                <input type="date" formControlName="to"  placeholder="to" class="form-control mr-2">
+              </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-divider></mat-divider>
+
+<mat-dialog-actions  align="end">
+    <button (click)="close()" pButton type="button" label="Cerrar" icon="pi pi-times-circle"
+        class="p-button-sm p-button-danger mr-3"></button>
+    <button pButton type="button" (click)="apply()" 
+    label="Aplicar Filtro" icon="pi pi-save"
+     class="p-button-sm"></button>
+</mat-dialog-actions>
