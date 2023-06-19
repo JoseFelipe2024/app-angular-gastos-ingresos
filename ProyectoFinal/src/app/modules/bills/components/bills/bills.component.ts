@@ -158,8 +158,7 @@ export class BillsComponent implements OnInit {
         description: this.description,
         from: this.from,
         to: this.to
-      },
-      width: '30%'
+      }
     }).afterClosed().subscribe((result: {
       apply: boolean,
       data: {
