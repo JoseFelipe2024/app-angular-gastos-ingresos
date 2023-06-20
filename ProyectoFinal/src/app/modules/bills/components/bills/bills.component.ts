@@ -152,6 +152,7 @@ export class BillsComponent implements OnInit {
 
   openModalFilter(){
     this.dialog.open(FilterComponent,{
+      panelClass: 'filter-component',
       data: {
         hideTypesTransaction: true,
         filterOption: this.filterOption
