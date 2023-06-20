@@ -6,7 +6,7 @@
     </div>
     <div class="formgroup-inline">
       <button  (click)="clearSearch()"
-      *ngIf="description || from || to"
+      *ngIf="filterOption?.description || filterOption?.from || filterOption?.to"
       matTooltip="Limpiar Filtro" matTooltipClass="tooltip-red"
        class="btn btn-secondary mr-2" type="button">
         <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
@@ -37,22 +37,6 @@
           </g>
         </svg>
       </button>
-      <!--div class="flex align-items-center justify-content-center">
-        <div class="input-group">
-          <div class="input-group-text" id="btnGroupAddon2">Descripción</div>
-          <input type="text" [(ngModel)]="description"  class="form-control mr-2">
-        </div>
-        <div class="input-group">
-          <div class="input-group-text" id="btnGroupAddon2">Desde</div>
-          <input type="date" [(ngModel)]="from" placeholder="Fecha" class="form-control mr-2">
-        </div>
-        <div class="input-group">
-          <div class="input-group-text" id="btnGroupAddon2">Hasta</div>
-          <input type="date" [(ngModel)]="to" placeholder="Fecha" class="form-control mr-2">
-        </div>
-        <button  (click)="clearSearch()" class="btn btn-outline-secondary mr-2" type="button">Limpiar</button>
-        <button (click)="filter()" class="btn btn-primary" type="button">Buscar</button>
-      </div-->
     </div>
   </div>
     <div class="card-body">
@@ -68,7 +52,7 @@
                     </tr>
                   </thead>
                   <tbody class="table-group-divider">
-                    <tr *ngFor="let item of transaction | paginate: { itemsPerPage: 5, currentPage: p }">
+                    <tr *ngFor="let item of transaction | paginate: { itemsPerPage: 5, currentPage: page }">
                       <td>{{item.amount | currency}}</td>
                       <td>{{item.date | date: 'dd/MM/yyyy'}}</td>
                       <td>{{item.description}}</td>
@@ -110,7 +94,7 @@
                 <pagination-controls 
                 previousLabel="Anterior"
                 nextLabel="Siguiente"
-                (pageChange)="p = $event"></pagination-controls>
+                (pageChange)="page = $event"></pagination-controls>
               </div>
         </div>
     </div>

@@ -13,6 +13,8 @@ import { ConfirmationService } from 'primeng/api';
 import { ToastrService } from 'ngx-toastr';
 import { formatDate } from '@angular/common';
 import { getFormatDate } from 'src/app/shared/utils/utils';
+import { FilterOption } from 'src/app/shared/models/filter-option.model';
+import { FilterComponent } from 'src/app/shared/components/filter/filter.component';
 
 @Component({
   selector: 'app-income',
@@ -24,8 +26,8 @@ export class IncomeComponent implements OnInit {
   transaction: Transaction[] = [];
   transactionOriginalList: Transaction[] = [];
   p: number = 1;
-  from!: Date | null;
-  to!: Date | null;
+  filterOption!: FilterOption;
+
   constructor(
     public dialog: MatDialog,
     private toastr: ToastrService,
@@ -133,27 +135,21 @@ export class IncomeComponent implements OnInit {
   }
 
   clearSearch(){
-    this.from = null;
-    this.to = null;
+    this.filterOption = null!;
     this.transaction = [...this.transactionOriginalList];
   }
 
   filter(){
-    if(!this.from || !this.to){
-      this.transaction = [...this.transactionOriginalList];
-      return;
-    }
-    if(getFormatDate(this.from) > getFormatDate(this.to) ){
-      this.toastr.warning('La fecha inicio no debe ser mayor que la fecha final');
-      return;
-    }
-    let transaction: any[] = this.getOriginalList.filter(item => {
-      if (getFormatDate(item?.date) >= getFormatDate(this.from) && getFormatDate(item?.date) <= getFormatDate(this.to)) {
+    this.transaction = this.getOriginalList?.filter(item => {
+      if (((item?.date >= this.filterOption?.from 
+      && item?.date <= this.filterOption?.to) 
+      || (!this.filterOption?.from && !this.filterOption?.to))
+      && (item?.description?.toLowerCase()?.includes((this.filterOption?.description || '')?.toLowerCase())
+       || !this.filterOption?.description)) {
         return item;
       }
        return;
     });
-    this.transaction = transaction;
   }
 
   private get getOriginalList(){
@@ -164,6 +160,23 @@ export class IncomeComponent implements OnInit {
 
   get getTotalAmount(){
     return this.transaction.reduce((previous, currentValue) => currentValue.amount + previous, 0);
+  }
+
+  openModalFilter(){
+    this.dialog.open(FilterComponent,{
+      data: {
+        hideTypesTransaction: true,
+        filterOption: this.filterOption
+      }
+    }).afterClosed().subscribe((result: {
+      apply: boolean,
+      data: FilterOption
+    }) => {
+      if(result?.apply){
+        this.filterOption = result.data;
+        this.filter();
+      }
+    });
   }
 
 }

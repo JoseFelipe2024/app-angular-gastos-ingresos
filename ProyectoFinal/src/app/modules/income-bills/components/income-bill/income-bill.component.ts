@@ -11,6 +11,8 @@ import { ToastrService } from 'ngx-toastr';
 import { MenuItem } from 'primeng/api';
 import { ExportService } from 'src/app/core/services/export.service';
 import { getFormatDate } from 'src/app/shared/utils/utils';
+import { FilterOption } from 'src/app/shared/models/filter-option.model';
+import { FilterComponent } from 'src/app/shared/components/filter/filter.component';
 
 @Component({
   selector: 'app-income-bill',
@@ -22,7 +24,6 @@ export class IncomeBillComponent implements OnInit {
   menuExportItems: MenuItem[] = [];
   transaction: Transaction[] = [];
   transactionOriginalList: Transaction[] = [];
-  selectedValue: any = null;
 
   typesTransaction: any[] = [
     {
@@ -34,11 +35,14 @@ export class IncomeBillComponent implements OnInit {
       name: 'Gasto'
     },
   ];
-  from!: Date | null;
-  to!: Date | null;
-  p: number = 1;
+  page: number = 1;
 
-  constructor(public dialog: MatDialog, private exportService: ExportService, private toastr: ToastrService, private transactionBaseService: TransactionBaseService) { }
+  filterOption!: FilterOption;
+
+  constructor(public dialog: MatDialog,
+     private exportService: ExportService, 
+    private toastr: ToastrService, 
+    private transactionBaseService: TransactionBaseService) { }
 
   ngOnInit(): void {
     this.getTransactions();
@@ -69,42 +73,22 @@ export class IncomeBillComponent implements OnInit {
   }
 
   clearSearch() {
-    this.from = null;
-    this.to = null;
-    this.selectedValue = null;
+    this.filterOption = null!;
     this.transaction = [...this.transactionOriginalList];
   }
 
   filter() {
-    if ((!this.from || !this.to) && !this.selectedValue) {
-      this.transaction = [...this.transactionOriginalList];
-      return;
-    }
-    if(this.from && this.to){
-      if(getFormatDate(this.from) > getFormatDate(this.to) ){
-        this.toastr.warning('La fecha inicio no debe ser mayor que la fecha final');
-        return;
-      }
-    }
-    let transaction: any[] = this.getOriginalList.filter(item => {
-      if(this.selectedValue && (!this.from || !this.to)) {
-        if (item.type === this.selectedValue) {
-          return item;
-        }
-        return;
-      }
-      if(!this.selectedValue && (this.from || this.to)) {
-        if (getFormatDate(item?.date) >= getFormatDate(this.from) && getFormatDate(item?.date) <= getFormatDate(this.to)) {
-          return item;
-        }
-        return;
-      }
-      if ((getFormatDate(item?.date) >= getFormatDate(this.from) && getFormatDate(item?.date) <= getFormatDate(this.to)) && item.type === this.selectedValue) {
+    this.transaction = this.getOriginalList?.filter(item => {
+      if (((item?.date >= this.filterOption?.from 
+      && item?.date <= this.filterOption?.to) 
+      || (!this.filterOption?.from && !this.filterOption?.to))
+      && (item?.description?.toLowerCase()?.includes((this.filterOption?.description || '')?.toLowerCase())
+       || !this.filterOption?.description)
+       && (item.type === this.filterOption?.transactionType || !this.filterOption?.transactionType)) {
         return item;
       }
-      return;
+       return;
     });
-    this.transaction = transaction
   }
 
   private get getOriginalList() {
@@ -151,6 +135,23 @@ export class IncomeBillComponent implements OnInit {
 
   get getTotalAmount(){
     return this.transaction.reduce((previous, currentValue) => currentValue.amount + previous, 0);
+  }
+
+  openModalFilter(){
+    this.dialog.open(FilterComponent,{
+      data: {
+        hideTypesTransaction: false,
+        filterOption: this.filterOption
+      }
+    }).afterClosed().subscribe((result: {
+      apply: boolean,
+      data: FilterOption
+    }) => {
+      if(result?.apply){
+        this.filterOption = result.data;
+        this.filter();
+      }
+    });
   }
 
 }

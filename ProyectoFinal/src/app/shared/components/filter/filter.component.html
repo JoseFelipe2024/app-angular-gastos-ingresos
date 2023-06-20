@@ -1,5 +1,13 @@
 <mat-dialog-content  class="mat-typography">
    <div class="row" [formGroup]="form">
+        <div class="col-12" *ngIf="!data?.hideTypesTransaction">
+            <div class="input-group">
+                <select class="form-select mr-2" formControlName="transactionType">
+                    <option selected disabled value="null">Tipo de Transacción</option>
+                    <option [ngValue]="item.id" *ngFor="let item of typesTransaction">{{item.name}}</option>
+                </select>
+            </div>
+        </div>
         <div class="col-12">
             <div class="input-group">
                 <div class="input-group-text" id="btnGroupAddon2">Descripción</div>

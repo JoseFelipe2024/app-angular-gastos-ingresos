@@ -14,6 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 import { formatDate } from '@angular/common';
 import { getFormatDate } from 'src/app/shared/utils/utils';
 import { FilterComponent } from 'src/app/shared/components/filter/filter.component';
+import { FilterOption } from 'src/app/shared/models/filter-option.model';
 
 @Component({
   selector: 'app-bills',
@@ -23,11 +24,10 @@ import { FilterComponent } from 'src/app/shared/components/filter/filter.compone
 })
 export class BillsComponent implements OnInit {
   transaction: Transaction[] = [];
-  p: number = 1;
+  page: number = 1;
   transactionOriginalList: Transaction[] = [];
-  from!: Date | null;
-  to!: Date | null;
-  description?: string;
+  filterOption!: FilterOption;
+
   constructor(public dialog: MatDialog,
     private toastr: ToastrService,
     private confirmationService: ConfirmationService,
@@ -42,7 +42,9 @@ export class BillsComponent implements OnInit {
       if(res.succeeded){
         this.transaction = res.data;
         this.transactionOriginalList = res.data;
-        this.filter();
+        if(this.filterOption){
+          this.filter();
+        }
       }else{
         this.toastr.error(res.message, '');
       }
@@ -121,56 +123,45 @@ export class BillsComponent implements OnInit {
   }
 
   clearSearch(){
-    this.description = '';
-    this.from = null;
-    this.to = null;
+    this.filterOption = null!;
     this.transaction = [...this.transactionOriginalList];
   }
 
   filter(){
-    if(getFormatDate(this.from) > getFormatDate(this.to) ){
-      this.toastr.warning('La fecha inicio no debe ser mayor que la fecha final');
-      return;
-    }
     this.transaction = this.getOriginalList?.filter(item => {
-      if (((getFormatDate(item?.date) >= getFormatDate(this.from) && getFormatDate(item?.date) <= getFormatDate(this.to)) 
-      || (!this.from && !this.to))
-      && (item?.description?.toLowerCase()?.includes((this.description || '')?.toLowerCase()) || !this.description)) {
+      if (((item?.date >= this.filterOption?.from 
+      && item?.date <= this.filterOption?.to) 
+      || (!this.filterOption?.from && !this.filterOption?.to))
+      && (item?.description?.toLowerCase()?.includes((this.filterOption?.description || '')?.toLowerCase())
+       || !this.filterOption?.description)) {
         return item;
       }
        return;
-    });;
+    });
   }
 
   private get getOriginalList(){
-    return [...this.transactionOriginalList.map(t => {
+    return [...this.transactionOriginalList?.map(t => {
       return {...t}
     })];
   }
 
   get getTotalAmount(){
-    return this.transaction.reduce((previous, currentValue) => currentValue.amount + previous, 0);
+    return this.transaction?.reduce((previous, currentValue) => currentValue?.amount + previous, 0);
   }
 
   openModalFilter(){
     this.dialog.open(FilterComponent,{
       data: {
-        description: this.description,
-        from: this.from,
-        to: this.to
+        hideTypesTransaction: true,
+        filterOption: this.filterOption
       }
     }).afterClosed().subscribe((result: {
       apply: boolean,
-      data: {
-        description: string,
-        from: Date,
-        to: Date
-      }
+      data: FilterOption
     }) => {
       if(result?.apply){
-        this.description = result?.data?.description;
-        this.from =  result?.data?.from;
-        this.to =  result?.data?.to;
+        this.filterOption = result.data;
         this.filter();
       }
     });
