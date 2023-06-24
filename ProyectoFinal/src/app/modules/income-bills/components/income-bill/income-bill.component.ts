@@ -78,14 +78,17 @@ export class IncomeBillComponent implements OnInit {
   }
 
   filter() {
-    this.transaction = this.getOriginalList?.filter(item => {
-      if (((item?.date >= this.filterOption?.from 
-      && item?.date <= this.filterOption?.to) 
+    this.transaction = this.getOriginalList?.filter(transaction => {
+      const transactionDate = getFormatDate(transaction?.date);
+      const fromDate = getFormatDate(this.filterOption?.from);
+      const toDate = getFormatDate(this.filterOption?.to);
+      if (((transactionDate >= fromDate 
+      && transactionDate <= toDate) 
       || (!this.filterOption?.from && !this.filterOption?.to))
-      && (item?.description?.toLowerCase()?.includes((this.filterOption?.description || '')?.toLowerCase())
+      && (transaction?.description?.toLowerCase()?.includes((this.filterOption?.description || '')?.toLowerCase())
        || !this.filterOption?.description)
-       && (item.type === this.filterOption?.transactionType || !this.filterOption?.transactionType)) {
-        return item;
+       && (transaction.type === this.filterOption?.transactionType || !this.filterOption?.transactionType)) {
+        return transaction;
       }
        return;
     });
