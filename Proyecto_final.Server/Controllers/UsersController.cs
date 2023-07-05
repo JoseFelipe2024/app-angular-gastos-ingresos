@@ -97,8 +97,8 @@ namespace Proyecto_final.Server.Controllers
             try
             {
                 var user = mapper.Map<User>(userDto);
-                user.CreateDate = new DateTimeOffset();
-                user.UpdateDate = new DateTimeOffset();
+                user.CreateDate = new DateTime();
+                user.UpdateDate = new DateTime();
                 user.Password = user.Password.ToEncryptedPassword();
                 response.Data = await this.userService.AddUser(user);
             }
@@ -130,7 +130,7 @@ namespace Proyecto_final.Server.Controllers
                 user.LastName = userDto.LastName;
                 user.Email = userDto.Email;
                 user.Photo = userDto.Photo;
-                user.UpdateDate = new DateTimeOffset();
+                user.UpdateDate = new DateTime();
                 response.Data = await this.userService.UpdateUser(user);
             }
             catch (Exception ex)

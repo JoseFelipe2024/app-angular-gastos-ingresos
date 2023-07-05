@@ -112,26 +112,22 @@ export class IncomeBillComponent implements OnInit {
 
   private exportToExcel() {
     let excelHeaders: string[][] = [[
-      "Id",
-      "Monto",
-      "Fecha",
-      "Descripción",
-      "Tipo",
-      "Fecha Creada",
-      "Fecha Actualizada",
-      "UserId",
-      "User",
+      "Amount",
+      "Date",
+      "Description",
+      "Type",
+      "CreateDate",
+      "UpdateDate",
+      "UserId"
     ],
     [
-      "id",
       "amount",
       "date",
       "description",
       "type",
       "createDate",
       "updateDate",
-      "userId",
-      "user"
+      "userId"
     ]];
     this.exportService.exportToExcelSpecificColumns(this.transaction, excelHeaders, 'Transaciones', true);
   }

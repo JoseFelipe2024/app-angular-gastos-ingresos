@@ -47,4 +47,8 @@ export class TransactionBaseService {
         return this.http.delete<ApiResponse<number>>(`${this.api_url}/Transaction?id=${id}`);
     }
 
+    buildLoad(transactions: Transaction[]){
+        return this.http.post<ApiResponse<Transaction[]>>(`${this.api_url}/Transaction/bulkLoad`, transactions);
+    }
+
 }

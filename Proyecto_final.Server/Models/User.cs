@@ -13,7 +13,7 @@ namespace Proyecto_final.Server.Models
         public string Email { get; set; }
         public string Photo { get; set; }
         public string Password { get; set; }
-        public DateTimeOffset CreateDate { get; set; }
-        public DateTimeOffset UpdateDate { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime UpdateDate { get; set; }
     }
 }

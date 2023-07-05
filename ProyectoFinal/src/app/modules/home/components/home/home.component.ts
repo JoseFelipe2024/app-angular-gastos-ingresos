@@ -3,6 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 import { TransactionBaseService } from 'src/app/core/services/transactionBase.service';
 import { TransactionType } from 'src/app/shared/models/transaction-Type.model';
 import { Transaction } from 'src/app/shared/models/transaction.mode';
+import { getFormatDate } from 'src/app/shared/utils/utils';
 
 @Component({
   selector: 'app-home',
@@ -186,7 +187,7 @@ export class HomeComponent implements OnInit {
 
   changeYear(){
     this.transactions = [...this.transactionsOriginaList?.filter(transaction => 
-      new Date(transaction?.date)?.getFullYear() === this.yearSeleted)];
+      (getFormatDate(transaction.date) as Date)?.getFullYear() === this.yearSeleted)];
     this.setData();
   }
 
@@ -207,12 +208,11 @@ export class HomeComponent implements OnInit {
     for (let index = 0; index <= 11; index++) {
       months.push(
         this.transactions
-          .filter((t) => new Date(t.date)?.getMonth() === index && t.type === type)
+          .filter((t) => (getFormatDate(t.date) as Date)?.getMonth() === index && t.type === type)
           .reduce((pre, curre) => pre + curre.amount, 0)
       );
     }
     return months;
   }
 
-  private getOptionMonth() {}
 }
