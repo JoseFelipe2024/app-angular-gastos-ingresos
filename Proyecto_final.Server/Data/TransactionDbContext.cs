@@ -11,7 +11,6 @@ namespace Proyecto_final.Server.Data
     {
         public TransactionDbContext(DbContextOptions<TransactionDbContext> options) : base(options)
         {
-
         }
 
         public DbSet<Transaction> Transaction { get; set; }
