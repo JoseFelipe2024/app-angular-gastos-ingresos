@@ -64,10 +64,7 @@ namespace Proyecto_final.Server
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<TransactionDbContext>();
-                if (context.Database.GetPendingMigrations().IsNullOrEmpty())
-                {
-                    context.Database.Migrate();
-                }
+                context.Database.Migrate();
             }
             app.UseCors(builder => builder
              .AllowAnyOrigin()
