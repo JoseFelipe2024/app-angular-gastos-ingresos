@@ -11,6 +11,11 @@ namespace Proyecto_final.Server.Data
     {
         public TransactionDbContext(DbContextOptions<TransactionDbContext> options) : base(options)
         {
+            if (!this.Database.GetPendingMigrations().Any())
+            {
+                this.Database.Migrate();
+            }
+         
         }
 
         public DbSet<Transaction> Transaction { get; set; }
