@@ -79,6 +79,10 @@ export class AuthService {
     return this.userAuth.asObservable();
   }
 
+  updateProfile(user: User){
+    return this.http.put<ApiResponse<null>>(`${this.api_url}/Users`, user);
+  }
+
   logout(): void {
     this.LocalStorageService.removeItem('user');
     this.userAuth.next(null!);

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { UserAuth } from '../../models/userAuth.model';
+import { ProfileComponent } from '../profile/profile.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-menu',
@@ -13,7 +15,7 @@ export class MenuComponent implements OnInit {
   itemsSubMenu!: MenuItem[];
   user!: UserAuth;
 
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, public dialog: MatDialog) {}
 
   ngOnInit() {
     this.items = [
@@ -44,10 +46,14 @@ export class MenuComponent implements OnInit {
       }
     ];
     this.itemsSubMenu = [
-      /*{
+      {
         label: 'Perfil',
         icon: 'pi pi-fw pi-user',
-      },*/
+        command: () => {
+          this.dialog.open(ProfileComponent,{
+          })
+        }
+      },
       {
         label: 'Cerrar Sesión',
         icon: 'pi pi-power-off',

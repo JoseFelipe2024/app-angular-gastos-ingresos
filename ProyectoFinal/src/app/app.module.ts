@@ -18,8 +18,8 @@ import { JwtModule } from '@auth0/angular-jwt';
 
 export function tokenGetter() {
   if(localStorage.getItem("user")){
-    const userAuth = localStorage.getItem("user") as unknown as UserAuth;
-    return JSON.parse(userAuth?.token)
+    const userAuth = JSON.parse(localStorage.getItem("user") ?? '') as unknown as UserAuth;
+    return userAuth?.token; 
   }
   return '';
 }
