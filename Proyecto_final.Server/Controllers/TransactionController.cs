@@ -31,7 +31,7 @@ namespace Proyecto_final.Server.Controllers
             var response = new ApiResponse<IEnumerable<Transaction>>();
             try
             {
-                response.Data = await this.transaction.GetTransactions(UserId);
+                response.Data = await this.transaction.GetTransactionsByUserId(UserId);
 
             }
             catch (Exception ex)

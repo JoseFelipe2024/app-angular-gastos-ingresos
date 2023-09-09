@@ -17,9 +17,15 @@ namespace Proyecto_final.Server.Services
             this.transactionDbContext = transactionDbContext;
         }
 
-        public async Task<IEnumerable<Transaction>> GetTransactions(int UserId)
+        public async Task<IEnumerable<Transaction>> GetTransactionsByUserId(int UserId)
         {
             return await this.transactionDbContext.Transaction.AsNoTracking().Where(t => t.UserId == UserId).ToListAsync();
+        }
+
+
+        public async Task<IEnumerable<Transaction>> GetTransactions()
+        {
+            return await this.transactionDbContext.Transaction.AsNoTracking().Include(transaction => transaction.User).ToListAsync();
         }
 
         public async Task<IEnumerable<Transaction>> GetTransactionByType(int type, int UserId)
