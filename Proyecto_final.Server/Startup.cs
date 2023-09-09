@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Proyecto_final.Server.ConfigurationModels;
 using Proyecto_final.Server.Data;
 using Proyecto_final.Server.Services;
 using System.Text;
@@ -30,6 +31,19 @@ namespace Proyecto_final.Server
             {
                 builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
             }));
+
+            var emailConfig = Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
+
+            services.AddSingleton(new EmailConfiguration()
+            {
+                Mail = Configuration["Mail"],
+                DisplayName = Configuration["DisplayName"],
+                Host = Configuration["Host"],
+                Port = int.Parse(Configuration["Port"]),
+                UserName = Configuration["UserName"],
+                Password = Configuration["Password"],
+            });
+
             var DefaultConnection = Configuration["DefaultConnection"];
             services.AddDbContext<TransactionDbContext>(option =>
             {
@@ -56,6 +70,8 @@ namespace Proyecto_final.Server
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddAutoMapper(typeof(Startup));
+            services.AddScoped<IMailService, MailService>();
+            services.AddHostedService<WorkerBackup>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

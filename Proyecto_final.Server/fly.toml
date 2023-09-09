@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for gestor-economia on 2023-07-11T21:23:54-04:00
+# fly.toml app configuration file generated for gestor-economia on 2023-07-12T06:39:21-04:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -6,14 +6,17 @@
 app = "gestor-economia"
 primary_region = "mia"
 kill_signal = "SIGINT"
-kill_timeout = "5s"
+kill_timeout = "10s"
 
 [experimental]
   auto_rollback = true
 
 [[services]]
-  protocol = "tcp"
+  http_checks = []
   internal_port = 5000
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
   processes = ["app"]
 
   [[services.ports]]
@@ -31,6 +34,6 @@ kill_timeout = "5s"
 
   [[services.tcp_checks]]
     interval = "15s"
-    timeout = "2s"
+    timeout = "10s"
     grace_period = "1s"
     restart_limit = 0
