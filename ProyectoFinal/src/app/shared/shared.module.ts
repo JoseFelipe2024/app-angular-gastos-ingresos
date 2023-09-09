@@ -19,9 +19,10 @@ import { MatIconModule } from "@angular/material/icon";
 import {AvatarModule} from 'primeng/avatar';
 import {MenuModule} from 'primeng/menu';
 import { FilterComponent } from './components/filter/filter.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
-    declarations: [MenuComponent,  AddTransactionComponent, ViewEvidenceComponent, FilterComponent],
+    declarations: [MenuComponent,  AddTransactionComponent, ViewEvidenceComponent, FilterComponent, ProfileComponent],
     imports: [ButtonModule, MatDialogModule, ToastrModule.forRoot(), MatFormFieldModule,
       MatInputModule, MatFormFieldModule, MatNativeDateModule, MatDatepickerModule, 
       MatButtonModule, FormsModule,CommonModule, ReactiveFormsModule, MatDividerModule,

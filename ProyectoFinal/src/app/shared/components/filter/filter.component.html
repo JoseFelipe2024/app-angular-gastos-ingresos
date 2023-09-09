@@ -9,22 +9,28 @@
             </div>
         </div>
         <div class="col-12">
-            <div class="input-group">
-                <div class="input-group-text" id="btnGroupAddon2">Descripción</div>
-                <input type="text" formControlName="description" class="form-control mr-2">
-              </div>
+            <div class="form-group">
+                <label class="text-label">Descripción</label>
+                <div>
+                    <input type="text" formControlName="description" placeholder="Descripción" class="form-control mr-2">
+                </div>
+            </div>
         </div>
-        <div class="col-12">
-            <div class="input-group">
-                <div class="input-group-text"  id="btnGroupAddon2">Desde</div>
-                <input type="date" formControlName="from" placeholder="from" class="form-control mr-2">
-              </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label class="text-label">Fecha desde</label>
+                <div>
+                    <input type="date" formControlName="from" placeholder="from" class="form-control mr-2">
+                </div>
+            </div>
         </div>
-        <div class="col-12">
-            <div class="input-group">
-                <div class="input-group-text" id="btnGroupAddon2">Hasta</div>
-                <input type="date" formControlName="to"  placeholder="to" class="form-control mr-2">
-              </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label class="text-label">Fecha Hasta</label>
+                <div>
+                    <input type="date" formControlName="to"  placeholder="to" class="form-control mr-2">
+                </div>
+            </div>
         </div>
     </div>
 </mat-dialog-content>
