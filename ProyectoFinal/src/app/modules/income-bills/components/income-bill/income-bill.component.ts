@@ -110,15 +110,15 @@ export class IncomeBillComponent implements OnInit {
     });
   }
 
-  private exportToExcel() {
+   exportToExcel() {
     let excelHeaders: string[][] = [[
-      "Amount",
-      "Date",
-      "Description",
-      "Type",
-      "CreateDate",
-      "UpdateDate",
-      "UserId"
+      "amount",
+      "date",
+      "description",
+      "type",
+      "createDate",
+      "updateDate",
+      "userId"
     ],
     [
       "amount",
@@ -152,6 +152,33 @@ export class IncomeBillComponent implements OnInit {
         this.filter();
       }
     });
+  }
+
+  async onFileChange(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      try {
+        const data = await this.exportService.importExcel<Transaction>(file);
+        const transactions = data.map(t => {
+          return {
+            ...t,
+            amount: +t?.amount,
+            type: +t?.type,
+            userId: +t?.userId
+          }
+        });
+        this.transactionBaseService.buildLoad(transactions).subscribe({
+          next: res => {
+            this.toastr.success('Datos importados correctamente');
+            this.getTransactions();
+          }, error: res => {
+            this.toastr.error('Ha ocurrido un error tratando de importar los datos');
+          }
+        })
+      } catch (error) {
+        this.toastr.error('Error al importar el archivo de Excel');
+      }
+    }
   }
 
 }
