@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import * as FileSaver from  "file-saver"
-import { utils, WorkBook, WorkSheet, write, writeFile} from "xlsx"
-
+import { read, utils, WorkBook, WorkSheet, write, writeFile} from "xlsx"
 @Injectable()
 export class ExportService {
   readonly EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8';
@@ -24,6 +23,24 @@ export class ExportService {
 
   private mapSelectedProps(list:any[], properties?:string[]){
       return list.map(data=> properties?.reduce((o: any,k) => (o[k] = data[k], o),{}));
+  }
+
+  importExcel<T>(file: File): Promise<T[]> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (event: any) => {
+        const data = new Uint8Array(event.target.result);
+        const workbook = read(data, { type: 'array' });
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+        const jsonData: T[] = utils.sheet_to_json(sheet, { raw: false });
+        resolve(jsonData);
+      };
+      reader.onerror = (error) => {
+        reject(error);
+      };
+      reader.readAsArrayBuffer(file);
+    });
   }
 
 }

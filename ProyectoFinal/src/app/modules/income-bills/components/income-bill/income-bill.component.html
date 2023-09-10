@@ -1,43 +1,85 @@
 <div class="card">
   <div class="card-header flex justify-content-end flex-wrap card-container">
     <div class="formgroup-inline">
-      <p-splitButton label="Normal" styleClass="bg-primary" [model]="menuExportItems">
-        <ng-template pTemplate="content">
-            <span class="ml-2 flex align-items-center font-bold">Exportar</span>
-        </ng-template>
-      </p-splitButton>
-      <button  (click)="clearSearch()"
-      *ngIf="filterOption?.transactionType || filterOption?.description || filterOption?.from || filterOption?.to"
-      matTooltip="Limpiar Filtro" matTooltipClass="tooltip-red"
-       class="btn btn-secondary mr-2" type="button">
-        <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
+
+      <button (click)="clearSearch()"
+        *ngIf="filterOption?.transactionType || filterOption?.description || filterOption?.from || filterOption?.to"
+        matTooltip="Limpiar Filtro" matTooltipClass="tooltip-red" class="btn btn-secondary mr-2" type="button">
+        <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+          stroke="#ffffff">
           <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
           <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-          <g id="SVGRepo_iconCarrier"> 
-            <g id="Edit / Redo"> 
-              <path id="Vector" d="M13.9998 8H18.9998V3M18.7091 16.3569C17.7772 17.7918 16.4099 18.8902 14.8079 19.4907C13.2059 20.0913 11.4534 20.1624 9.80791 19.6937C8.16246 19.225 6.71091 18.2413 5.66582 16.8867C4.62073 15.5321 4.03759 13.878 4.00176 12.1675C3.96593 10.4569 4.47903 8.78001 5.46648 7.38281C6.45392 5.98561 7.86334 4.942 9.48772 4.40479C11.1121 3.86757 12.8661 3.86499 14.4919 4.39795C16.1177 4.93091 17.5298 5.97095 18.5209 7.36556" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> 
-            </g> 
-          </g>
-          </svg>
-      </button>
-
-      <button  class="btn btn-primary"
-      (click)="openModalFilter()"
-      matTooltip="Filtrar" matTooltipClass="tooltip-red" >
-      <svg width="24px" height="24px" viewBox="0 0 24 24" 
-      fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
-        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-        <g id="SVGRepo_iconCarrier">
-            <path d="M14.3201 19.07C14.3201 19.68 13.92 20.48 13.41 20.79L12.0001 21.7C10.6901 22.51 8.87006 21.6 8.87006 19.98V14.63C8.87006 13.92 8.47006 13.01 8.06006 12.51L4.22003 8.47C3.71003 7.96 3.31006 7.06001 3.31006 6.45001V4.13C3.31006 2.92 4.22008 2.01001 5.33008 2.01001H18.67C19.78 2.01001 20.6901 2.92 20.6901 4.03V6.25C20.6901 7.06 20.1801 8.07001 19.6801 8.57001" stroke="#ffffff" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round">
-            </path> 
-            <path d="M16.07 16.52C17.8373 16.52 19.27 15.0873 19.27 13.32C19.27 11.5527 17.8373 10.12 16.07 10.12C14.3027 10.12 12.87 11.5527 12.87 13.32C12.87 15.0873 14.3027 16.52 16.07 16.52Z" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            </path>
-            <path d="M19.87 17.12L18.87 16.12" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            </path> 
+          <g id="SVGRepo_iconCarrier">
+            <g id="Edit / Redo">
+              <path id="Vector"
+                d="M13.9998 8H18.9998V3M18.7091 16.3569C17.7772 17.7918 16.4099 18.8902 14.8079 19.4907C13.2059 20.0913 11.4534 20.1624 9.80791 19.6937C8.16246 19.225 6.71091 18.2413 5.66582 16.8867C4.62073 15.5321 4.03759 13.878 4.00176 12.1675C3.96593 10.4569 4.47903 8.78001 5.46648 7.38281C6.45392 5.98561 7.86334 4.942 9.48772 4.40479C11.1121 3.86757 12.8661 3.86499 14.4919 4.39795C16.1177 4.93091 17.5298 5.97095 18.5209 7.36556"
+                stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </g>
           </g>
         </svg>
       </button>
+
+      <button class="btn btn-primary mr-2" (click)="exportToExcel()" matTooltip="Exportar a Excel"
+        matTooltipClass="tooltip-red">
+        <svg fill="#fcfcfc" width="24px" height="24px" viewBox="0 0 24 24" id="download-8" data-name="Flat Line"
+          xmlns="http://www.w3.org/2000/svg" class="icon flat-line">
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+          <g id="SVGRepo_iconCarrier">
+            <polyline id="primary" points="15 14 12 17 9 14"
+              style="fill: none; stroke: #fcfcfc; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+            </polyline>
+            <line id="primary-2" data-name="primary" x1="12" y1="17" x2="12" y2="3"
+              style="fill: none; stroke: #fcfcfc; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+            </line>
+            <path id="primary-3" data-name="primary"
+              d="M16,10h3a1,1,0,0,1,1,1v9a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V11a1,1,0,0,1,1-1H8"
+              style="fill: none; stroke: #fcfcfc; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;">
+            </path>
+          </g>
+        </svg>
+      </button>
+
+      <label for="file-upload" class="btn btn-primary mr-2" data-title="Subir" matTooltip="Importar"
+        matTooltipClass="tooltip-red" data-toggle="tooltip">
+        <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+          <g id="SVGRepo_iconCarrier">
+            <path
+              d="M15 21H9C6.17157 21 4.75736 21 3.87868 20.1213C3 19.2426 3 17.8284 3 15M21 15C21 17.8284 21 19.2426 20.1213 20.1213C19.8215 20.4211 19.4594 20.6186 19 20.7487"
+              stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M12 16V3M12 3L16 7.375M12 3L8 7.375" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </g>
+        </svg>
+      </label>
+      <input id="file-upload" class="btn btn-primary mr-2" type="file"
+        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden
+        (change)="onFileChange($event)" />
+
+      <button class="btn btn-primary" (click)="openModalFilter()" matTooltip="Filtrar" matTooltipClass="tooltip-red">
+        <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+          stroke="#ffffff">
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+          <g id="SVGRepo_iconCarrier">
+            <path
+              d="M14.3201 19.07C14.3201 19.68 13.92 20.48 13.41 20.79L12.0001 21.7C10.6901 22.51 8.87006 21.6 8.87006 19.98V14.63C8.87006 13.92 8.47006 13.01 8.06006 12.51L4.22003 8.47C3.71003 7.96 3.31006 7.06001 3.31006 6.45001V4.13C3.31006 2.92 4.22008 2.01001 5.33008 2.01001H18.67C19.78 2.01001 20.6901 2.92 20.6901 4.03V6.25C20.6901 7.06 20.1801 8.07001 19.6801 8.57001"
+              stroke="#ffffff" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round">
+            </path>
+            <path
+              d="M16.07 16.52C17.8373 16.52 19.27 15.0873 19.27 13.32C19.27 11.5527 17.8373 10.12 16.07 10.12C14.3027 10.12 12.87 11.5527 12.87 13.32C12.87 15.0873 14.3027 16.52 16.07 16.52Z"
+              stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            </path>
+            <path d="M19.87 17.12L18.87 16.12" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round">
+            </path>
+          </g>
+        </svg>
+      </button>
+
+
     </div>
   </div>
   <div class="card-body">
